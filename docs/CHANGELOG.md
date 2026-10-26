@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2 — 2026-10-26 (Europe/Chisinau)
+
+### Ukraine catalog expansion
+- **Prom.ua** (`prom_ua`) and **Flagma.ua** (`flagma_ua`): public search HTML → schema.org Product JSON-LD.
+- Shared `jsonld_client` with SSRF checks, rate limits, CAPTCHA refusal.
+- Deferred: Rozetka (CF hydrate), Bigl/Hotline (no usable SSR products), Allo/DOK/Exist (blocked).
+
 ## 0.2.0 — 2026-10-26 (Europe/Chisinau)
 
 ### GraphQL catalog collection

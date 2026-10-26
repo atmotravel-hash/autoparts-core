@@ -31,6 +31,22 @@ sources:
     countries: [UA]
     tested: 2026-10-26
 
+  - id: prom_ua
+    name: Prom.ua Ukraine
+    method: HTML search Product JSON-LD
+    status: operational
+    countries: [UA]
+    tested: 2026-10-26
+    notes: Public search/detail pages embed schema.org Product — verified
+
+  - id: flagma_ua
+    name: Flagma.ua Ukraine
+    method: HTML search Product JSON-LD
+    status: operational
+    countries: [UA]
+    tested: 2026-10-26
+    notes: Public B2B/marketplace search embeds Product JSON-LD — verified
+
   - id: olx_pl
     name: OLX Poland
     method: GraphQL POST /apigateway/graphql
@@ -62,6 +78,8 @@ sources:
 # Default live search — zero keys required
 default_live_source_ids:
   - olx_ua
+  - prom_ua
+  - flagma_ua
   - olx_pl
   - olx_ro
   - olx_bg
@@ -78,6 +96,20 @@ deferred_sources:
     reason: OAuth app + CAPTCHA on public GraphQL
   - id: autodoc
     reason: Cloudflare challenge
+  - id: rozetka
+    reason: Search API returns IDs only; goods hydrate blocked by Cloudflare
+  - id: bigl
+    reason: Same stack as Prom but search HTML lacks Product JSON-LD
+  - id: hotline
+    reason: Nuxt shell without product prices in SSR HTML; no public search API
+  - id: allo
+    reason: Cloudflare challenge
+  - id: exist_ua
+    reason: 403 / blocked
+  - id: dok_ua
+    reason: Cloudflare challenge
+  - id: avto_pro
+    reason: 403 / blocked
   - id: ovoko
     reason: Partner API / Cloudflare
   - id: brave_search

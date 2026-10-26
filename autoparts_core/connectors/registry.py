@@ -9,9 +9,11 @@ import yaml
 
 from autoparts_core.connectors.base import SourceConnector
 from autoparts_core.connectors.fixture import FixtureConnector
+from autoparts_core.connectors.flagma_ua import FlagmaUaConnector
 from autoparts_core.connectors.manual import ManualImportConnector
 from autoparts_core.connectors.nine99_md import Nine99MdConnector
 from autoparts_core.connectors.olx_graphql import build_olx_connectors
+from autoparts_core.connectors.prom_ua import PromUaConnector
 
 
 _REGISTRY: dict[str, SourceConnector] | None = None
@@ -45,11 +47,15 @@ def get_registry() -> dict[str, SourceConnector]:
         fixture = FixtureConnector()
         manual = ManualImportConnector()
         nine = Nine99MdConnector()
+        prom = PromUaConnector()
+        flagma = FlagmaUaConnector()
         olx = build_olx_connectors()
         _REGISTRY = {
             fixture.source_id: fixture,
             manual.source_id: manual,
             nine.source_id: nine,
+            prom.source_id: prom,
+            flagma.source_id: flagma,
             **olx,
         }
         # Optional: AUTO.RIA only if explicitly enabled AND key present
