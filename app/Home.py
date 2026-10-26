@@ -28,12 +28,8 @@ page_header("AutoParts Intelligence", "Find. Compare. Buy. — Europe · Moldova
 
 st.sidebar.markdown("### Navigation")
 st.sidebar.caption("John Doe — Pro Plan (local MVP)")
-st.sidebar.info(
-    "Live: **OLX UA/PL/RO/BG/PT** + **999.md**. "
-    "AUTO.RIA — official API (set `AUTORIA_API_KEY`). "
-    "AUTODOC/Ovoko/Allegro: credentials/challenge only — no CAPTCHA bypass."
-)
-st.sidebar.markdown("Data partners: [AUTO.RIA](https://auto.ria.com)")
+st.sidebar.success("Live без ключей: **OLX UA/PL/RO/BG/PT** + **999.md**")
+st.sidebar.caption("Геморные источники (RIA/Allegro/eBay/AUTODOC…) отсеяны из MVP.")
 
 with get_session() as session:
     listings = session.query(Listing).count()

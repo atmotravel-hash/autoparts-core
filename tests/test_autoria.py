@@ -58,7 +58,17 @@ def test_autoria_parse_listing():
     assert parsed.is_demo_data is False
 
 
-def test_registry_includes_autoria():
-    # May reset depending on prior tests; just ensure key exists in list
+def test_registry_excludes_autoria_by_default():
+    import autoparts_core.connectors.registry as reg
+
+    reg._REGISTRY = None
     rows = {r["source_id"]: r for r in list_connectors()}
-    assert "auto_ria" in rows
+    assert "auto_ria" not in rows
+
+
+def test_deferred_catalog_lists_autoria():
+    from autoparts_core.connectors.registry import load_deferred_sources
+
+    ids = {d["id"] for d in load_deferred_sources()}
+    assert "auto_ria" in ids
+    assert "allegro" in ids

@@ -17,10 +17,10 @@ def test_fixture_operational():
     assert parsed.is_demo_data
 
 
-def test_stubs_not_operational():
+def test_hassle_sources_not_in_active_registry():
     rows = {r["source_id"]: r for r in list_connectors()}
-    assert rows["ebay"]["operational"] is False
-    assert rows["allegro"]["operational"] is False
+    for sid in ("ebay", "allegro", "autodoc", "ovoko", "auto_ria", "brave_search"):
+        assert sid not in rows
 
 
 def test_search_persists(tmp_path, monkeypatch):

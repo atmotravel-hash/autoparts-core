@@ -23,7 +23,10 @@ def test_registry_marks_live_connectors_operational():
     assert rows["nine99_md"]["operational"] is True
     for sid in ("olx_ua", "olx_pl", "olx_ro", "olx_bg", "olx_pt"):
         assert rows[sid]["operational"] is True, sid
-    assert rows["autodoc"]["operational"] is False
+    # Hassle stubs removed from registry
+    assert "autodoc" not in rows
+    assert "ebay" not in rows
+    assert "auto_ria" not in rows
 
 
 def test_graphql_client_rejects_ssrf():

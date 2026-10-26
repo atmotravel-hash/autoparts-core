@@ -1,213 +1,65 @@
-# Catalog of thematic sources for Europe / Moldova / Ukraine.
-# operational=true only after a successful test in this environment.
+# Active sources only — no credential/CAPTCHA/partner-hassle in the default path.
+# Deferred ideas live under deferred_sources (not loaded into search).
 
 sources:
   - id: fixture
     name: Offline Fixture Source
     method: FIXTURE
-    graphql: false
     status: operational
     countries: [DE, PL, LT, UA, MD]
-    notes: Demo data only
+    notes: Demo data only — labelled is_demo_data
 
   - id: manual
     name: Manual URL Import
     method: MANUAL_IMPORT
-    graphql: false
     status: operational
     countries: []
-    notes: Metadata import with SSRF checks
+    notes: User URL/CSV metadata — SSRF-safe
 
   - id: nine99_md
     name: 999.md Moldova
     method: GraphQL POST https://999.md/graphql
-    graphql: true
-    endpoint: https://999.md/graphql
     status: operational
     countries: [MD]
     tested: 2026-10-26
-    notes: Public catalog searchAds / advert — verified
+    notes: Public catalog — verified
 
   - id: olx_ua
     name: OLX Ukraine
     method: GraphQL POST /apigateway/graphql
-    graphql: true
-    endpoint: https://www.olx.ua/apigateway/graphql
     status: operational
     countries: [UA]
     tested: 2026-10-26
-    notes: ListingSearchQuery — verified
 
   - id: olx_pl
     name: OLX Poland
     method: GraphQL POST /apigateway/graphql
-    graphql: true
-    endpoint: https://www.olx.pl/apigateway/graphql
     status: operational
     countries: [PL]
     tested: 2026-10-26
-    notes: ListingSearchQuery — verified
 
   - id: olx_ro
     name: OLX Romania
     method: GraphQL POST /apigateway/graphql
-    graphql: true
-    endpoint: https://www.olx.ro/apigateway/graphql
     status: operational
     countries: [RO]
     tested: 2026-10-26
-    notes: ListingSearchQuery — verified
 
   - id: olx_bg
     name: OLX Bulgaria
     method: GraphQL POST /apigateway/graphql
-    graphql: true
-    endpoint: https://www.olx.bg/apigateway/graphql
     status: operational
     countries: [BG]
     tested: 2026-10-26
-    notes: ListingSearchQuery — verified
 
   - id: olx_pt
     name: OLX Portugal
     method: GraphQL POST /apigateway/graphql
-    graphql: true
-    endpoint: https://www.olx.pt/apigateway/graphql
     status: operational
     countries: [PT]
     tested: 2026-10-26
-    notes: ListingSearchQuery — verified
 
-  - id: auto_ria
-    name: AUTO.RIA
-    method: Official GET developers.ria.com/auto/search + /auto/info
-    graphql: false
-    status: credentials_missing
-    countries: [UA]
-    notes: Free API key at https://developers.ria.com (profile). Requires crawlable link to auto.ria.com. Free tier ~30 req/hour. Donor cars via spareParts=1.
-
-  - id: ebay
-    name: eBay
-    method: Official Developer API
-    graphql: false
-    status: credentials_missing
-    countries: [DE, PL, FR, IT, ES, GB]
-    notes: Requires EBAY_APP_ID — not tested live
-
-  - id: allegro
-    name: Allegro
-    method: Official REST API
-    graphql: false
-    status: credentials_missing
-    countries: [PL]
-    notes: OAuth required — GraphQL HTML blocked by captcha
-
-  - id: brave_search
-    name: Brave Search
-    method: Search API
-    graphql: false
-    status: credentials_missing
-    countries: []
-    notes: Discovery only when API key present
-
-  - id: autodoc
-    name: AUTODOC
-    method: Candidate catalog / RapidAPI
-    graphql: false
-    status: blocked_challenge
-    countries: [DE, PL, LT, UA, RO]
-    notes: Cloudflare challenge on /graphql — NOT bypassed; needs authorized access
-
-  - id: ovoko
-    name: Ovoko / RRR
-    method: Partner API candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [LT, PL, DE, UA]
-    notes: Cloudflare on public GraphQL probe — seller partner API not configured
-
-  - id: intercars
-    name: Inter Cars
-    method: Candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [PL, LT, LV, EE, RO, HU, SK, CZ]
-    notes: Public /graphql not available without challenge
-
-  - id: dok_ua
-    name: DOK.ua
-    method: Candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [UA]
-    notes: Cloudflare on probe
-
-  - id: exist_ua
-    name: Exist.ua
-    method: Candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [UA]
-    notes: Access denied on /graphql probe
-
-  - id: otomoto
-    name: Otomoto
-    method: Candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [PL]
-    notes: Vehicle marketplace; challenge on GraphQL probe
-
-  - id: mobile_de
-    name: mobile.de
-    method: Candidate
-    graphql: false
-    status: blocked_challenge
-    countries: [DE]
-    notes: Cars, not parts-first; GraphQL blocked
-
-  - id: eurocarparts
-    name: Euro Car Parts / Omnipart
-    method: API Platform / GraphiQL candidate
-    graphql: true
-    endpoint: https://api.omnipart.eurocarparts.com/graphql
-    status: access_denied
-    countries: [GB]
-    notes: 403 Forbidden without auth
-
-  - id: goodvin
-    name: GOODVIN catalog API
-    method: Documented REST catalog
-    graphql: false
-    status: unevaluated_auth
-    countries: [UA, MD, EU]
-    notes: Docs at goodvin.net/api — requires account/terms review before use
-
-  - id: dekoparts
-    name: Dekoparts UA
-    method: GraphQL (Vendure) candidate
-    graphql: true
-    status: unevaluated
-    countries: [UA]
-    notes: B2B wholesale; GraphQL reported in case study — no public test yet
-
-  - id: motopoland
-    name: MotoPoland
-    method: Allegro-backed aggregator
-    graphql: false
-    status: unevaluated
-    countries: [UA, PL]
-    notes: Aggregates Allegro; prefer Allegro official API
-
-  - id: partsfrog
-    name: PartsFrog
-    method: Shopify storefront
-    graphql: false
-    status: not_graphql_catalog
-    countries: [US]
-    notes: /graphql returned HTML interstitial — out of primary market
-
-# Preferred live search order when DEMO_MODE mixes sources
+# Default live search — zero keys required
 default_live_source_ids:
   - olx_ua
   - olx_pl
@@ -215,4 +67,30 @@ default_live_source_ids:
   - olx_bg
   - olx_pt
   - nine99_md
-  - auto_ria
+
+# Explicitly deferred (гемор: ключи / OAuth / Cloudflare / партнёрки / лимиты)
+deferred_sources:
+  - id: auto_ria
+    reason: Free API key + 30 req/h + mostly cars/donors, not parts listings
+  - id: ebay
+    reason: Paid/dev credentials
+  - id: allegro
+    reason: OAuth app + CAPTCHA on public GraphQL
+  - id: autodoc
+    reason: Cloudflare challenge
+  - id: ovoko
+    reason: Partner API / Cloudflare
+  - id: brave_search
+    reason: API key for discovery only
+  - id: intercars
+    reason: Challenge / no public catalog API
+  - id: dok_ua
+    reason: Cloudflare
+  - id: exist_ua
+    reason: Access denied
+  - id: otomoto
+    reason: Challenge; cars-first
+  - id: eurocarparts
+    reason: Auth-locked GraphQL schema
+  - id: goodvin
+    reason: Account/terms before use

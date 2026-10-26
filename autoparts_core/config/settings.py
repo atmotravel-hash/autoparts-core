@@ -43,7 +43,8 @@ class Settings(BaseSettings):
     allegro_client_secret: str | None = None
     fx_api_key: str | None = None
     vin_decode_api_key: str | None = None
-    # FREE key: register at https://developers.ria.com → Мій профіль → API key
+    # Deferred hassle path — off by default (needs key + low rate limits)
+    enable_autoria: bool = False
     autoria_api_key: str | None = None
     autoria_min_interval_seconds: float = 2.5
 

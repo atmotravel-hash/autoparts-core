@@ -1,33 +1,25 @@
-# GraphQL / catalog sources — 26 Oct 2026 (Europe/Chisinau)
+# Источники — упрощённый MVP
 
-## Working (tested this environment)
+## В поиске (без ключей, проверено)
 
-| Source | Endpoint | Method | Markets |
-|--------|----------|--------|---------|
-| 999.md | `POST https://999.md/graphql` | `searchAds`, `advert` | Moldova |
-| OLX UA | `POST …/apigateway/graphql` | `ListingSearchQuery` | Ukraine |
-| OLX PL | same | `ListingSearchQuery` | Poland |
-| OLX RO | same | `ListingSearchQuery` | Romania |
-| OLX BG | same | `ListingSearchQuery` | Bulgaria |
-| OLX PT | same | `ListingSearchQuery` | Portugal |
+| ID | Рынок | Метод |
+|----|--------|--------|
+| `olx_ua` | Украина | `POST /apigateway/graphql` |
+| `olx_pl` | Польша | то же |
+| `olx_ro` | Румыния | то же |
+| `olx_bg` | Болгария | то же |
+| `olx_pt` | Португалия | то же |
+| `nine99_md` | Молдова | `POST /graphql` |
+| `fixture` | — | демо |
+| `manual` | — | импорт URL/CSV |
 
-These use the same public catalog GraphQL the websites call from their UI. Client-side rate limits apply. CAPTCHA/Cloudflare challenges are **not** bypassed.
+## Отсеяно (гемор)
 
-## Broad scan (~70 hosts)
+См. `deferred_sources` в `autoparts_core/config/sources.yaml`:
 
-Many classifieds/parts shops were probed for `/graphql`, `/apigateway/graphql`, `/api/graphql`.
+- AUTO.RIA — ключ + 30 req/h + в основном авто/доноры
+- eBay / Allegro — OAuth / ключи
+- AUTODOC / Ovoko / Inter Cars / DOK / Exist — Cloudflare/CAPTCHA
+- Brave, GOODVIN, Euro Car Parts — ключи / закрытая схема
 
-| Candidate | Finding |
-|-----------|---------|
-| AUTO.RIA | Public JSON search for vehicles; parts → `developers.ria.com` API key |
-| Euro Car Parts `/api/graphql` | Endpoint alive; schema locked without known operations |
-| Otomoto / Standvirtual | Challenge or incompatible schema |
-| Kleinanzeigen | 403 JSON |
-| Lalafo / Kufar / Autoplius | No usable public search in this probe |
-| AUTODOC / Ovoko / Allegro / Inter Cars / DOK / Exist | Cloudflare/CAPTCHA or deny — not bypassed |
-
-## Configuration
-
-- Catalog: `autoparts_core/config/sources.yaml`
-- Flags: `ENABLE_LIVE_GRAPHQL`, `INCLUDE_FIXTURE_IN_LIVE_SEARCH`
-- Live tests: `RUN_LIVE_GRAPHQL=1 pytest -m live`
+Включать обратно только по явной необходимости (`ENABLE_AUTORIA=true` + ключ для RIA).
