@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.env
+data/*.db
+data/*.db-*
+exports/
+*.egg-info/
+.streamlit/secrets.toml
+.DS_Store
+dist/
+*.zip
+!releases/*.zip

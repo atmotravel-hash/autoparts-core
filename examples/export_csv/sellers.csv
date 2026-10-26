@@ -1,0 +1,7 @@
+internal_id,display_name,business_name,public_phone,public_email,public_website,country,seller_type,rating,review_count
+sel_3970980c8330,AUTODOC,,'+49-000-000000,,,DE,BUSINESS,4.7,12840
+sel_1bd88c98a6a0,PartStore,,'+48-000-000000,,,PL,BUSINESS,4.4,920
+sel_8b2c86d46195,Ovoko,,,,,LT,BUSINESS,4.1,3400
+sel_67f8c44fddf8,BalticParts,,,,,LT,BUSINESS,4.6,510
+sel_a093577ffe1c,AutoMD Pro,,'+373-000-00000,,,MD,BUSINESS,4.0,88
+sel_52d961c7b87b,YardDE,,,,,DE,BUSINESS,3.9,120

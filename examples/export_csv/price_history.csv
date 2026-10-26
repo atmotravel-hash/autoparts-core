@@ -1,0 +1,9 @@
+listing_id,amount,currency,shipping_amount,shipping_currency,converted_amount,converted_currency,estimated_landed,fx_rate,fx_provider,fx_timestamp,warnings,observed_at
+1,214.0,EUR,15.0,EUR,,,,,,,,2026-10-26T04:06:46.054796
+2,189.0,EUR,22.0,EUR,,,,,,,,2026-10-26T04:06:46.060243
+3,4200.0,UAH,,UAH,,,,,,,,2026-10-26T04:06:46.061955
+4,241.5,EUR,18.0,EUR,,,,,,,,2026-10-26T04:06:46.063397
+5,3800.0,MDL,150.0,MDL,,,,,,,,2026-10-26T04:06:46.065513
+6,160.0,EUR,12.0,EUR,,,,,,,,2026-10-26T04:06:46.066694
+7,214.0,EUR,15.0,EUR,,,,,,,,2026-10-26T04:06:46.067939
+8,45.0,EUR,20.0,EUR,,,,,,,,2026-10-26T04:06:46.069744
