@@ -1,6 +1,6 @@
 # AutoParts Core
 
-Поиск автозапчастей по публичным каталогам **EU · Moldova · Ukraine**.
+Поиск автозапчастей по публичным каталогам **UA · MD · RO**.
 
 ## Сайт (основной продукт)
 
@@ -10,9 +10,9 @@ Next.js в папке [`web/`](web/) — лендинг, поиск, источ�
 cd web && npm install && npm run dev
 ```
 
-Live-каталоги: OLX UA/PL/RO/BG/PT, Prom.ua, Flagma.ua, Prom.md, Bazar.bg, 999.md.  
+Live-каталоги: OLX UA/RO, Prom.ua, Flagma.ua, Prom.md, 999.md.  
 Метод: публичный GraphQL / Product JSON-LD. CAPTCHA не обходим.  
-Закрытые источники → легитимные пути в [`docs/ACCESS_PATHS.md`](docs/ACCESS_PATHS.md).
+Закрытые / вне scope → [`docs/ACCESS_PATHS.md`](docs/ACCESS_PATHS.md).
 
 ## Python-ядро (локально)
 

@@ -19,19 +19,8 @@ from autoparts_core.connectors.jsonld_client import (
 from autoparts_core.core.models import ConnectorCapabilities, ListingView, SearchHit
 from autoparts_core.identity.condition import normalize_condition
 
+# Product scope: UA · MD · RO only (bazar_bg deferred).
 JSONLD_MARKETS: dict[str, dict[str, Any]] = {
-    "bazar_bg": {
-        "source_name": "Bazar.bg Bulgaria (JSON-LD catalog)",
-        "origin": "https://bazar.bg",
-        "country": "BG",
-        "languages": ["bg", "en"],
-        "default_currency": "EUR",
-        "search_url": "https://bazar.bg/obiavi?q={query}",
-        "id_regex": r"obiava-(\d+)",
-        "seller_type": "PRIVATE",
-        "confidence": 0.84,
-        "terms": "Product nodes inside ItemList on public Bazar.bg search HTML.",
-    },
     "prom_md": {
         "source_name": "Prom.md Moldova (JSON-LD catalog)",
         "origin": "https://prom.md",

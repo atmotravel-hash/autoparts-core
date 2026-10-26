@@ -49,12 +49,11 @@ def test_extract_jsonld_products():
     assert currency == "UAH"
 
 
-def test_product_scope_full_zero_key():
+def test_product_scope_ua_md_ro_only():
     catalog = {s["id"]: s for s in load_source_catalog()}
     assert catalog["prom_ua"]["status"] == "operational"
     assert catalog["flagma_ua"]["status"] == "operational"
     assert catalog["prom_md"]["status"] == "operational"
-    assert catalog["bazar_bg"]["status"] == "operational"
     assert catalog["olx_ro"]["status"] == "operational"
     assert catalog["nine99_md"]["status"] == "operational"
     live = set(default_live_source_ids())
@@ -65,22 +64,20 @@ def test_product_scope_full_zero_key():
         "nine99_md",
         "prom_md",
         "olx_ro",
-        "olx_pl",
-        "olx_bg",
-        "bazar_bg",
-        "olx_pt",
     }
+    assert "bazar_bg" not in live
+    assert "olx_pl" not in live
 
 
 def test_registry_scope():
     rows = {r["source_id"]: r for r in list_connectors()}
     assert rows["prom_ua"]["operational"] is True
     assert rows["flagma_ua"]["operational"] is True
-    assert rows["bazar_bg"]["operational"] is True
     assert rows["prom_md"]["operational"] is True
-    assert rows["olx_pl"]["operational"] is True
-    assert rows["olx_bg"]["operational"] is True
-    assert rows["olx_pt"]["operational"] is True
+    assert "bazar_bg" not in rows
+    assert "olx_pl" not in rows
+    assert "olx_bg" not in rows
+    assert "olx_pt" not in rows
     assert "autodoc" not in rows
     assert "ebay" not in rows
 

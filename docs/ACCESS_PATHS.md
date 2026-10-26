@@ -3,6 +3,8 @@
 Метод «допускает» = публичный GraphQL витрины **или** Product/ItemList JSON-LD **или** документированный API.  
 Обход Cloudflare/CAPTCHA — **нет**.
 
+**Продуктовый scope: только UA · MD · RO.**
+
 ## Подключено в продукте (zero-key)
 
 | ID | Рынок | Метод | Статус |
@@ -13,12 +15,15 @@
 | nine99_md | MD | GraphQL `https://999.md/graphql` | live |
 | prom_md | MD | search HTML Product JSON-LD | live |
 | olx_ro | RO | GraphQL | live |
-| olx_pl | PL | GraphQL | live |
-| olx_bg | BG | GraphQL | live |
-| bazar_bg | BG | ItemList Product JSON-LD | live |
-| olx_pt | PT | GraphQL | live |
 
 Свежесть: объявления с age > 30 дней отбрасываются.
+
+## Вне scope продукта (метод есть, рынки не UA/MD/RO)
+
+| Источник | Метод | Почему не в продукте |
+|----------|--------|----------------------|
+| olx_pl / olx_bg / olx_pt | GraphQL | Только UA · MD · RO |
+| bazar_bg | ItemList JSON-LD | Только UA · MD · RO |
 
 ## Не допускают публичный сбор — легитимный путь
 
@@ -31,9 +36,9 @@
 | AUTO.RIA | ключ + 30 req/h | https://developers.ria.com free key (opt-in `ENABLE_AUTORIA`) |
 | Otomoto / Autovit / Standvirtual | cars-first Otodom | OLX Group Partner API |
 | Mobile.de / AutoScout24 | auth GraphQL | Official dealer APIs |
-| Hotline / Bigl | нет Product JSON-LD в SSR | Нет публичного каталога; Bigl = стек Prom без LD на search |
+| Hotline / Bigl | нет Product JSON-LD в SSR | Нет публичного каталога |
 | Publi24 / Jófogás / Lajumate | нет usable Product LD | Нет zero-key path на момент проверки |
 | Inter Cars / iParts / Ovoko/RRR | CF / partner | Partner portal |
 
 ## Политика расширения
-Новый источник попадает в продукт только после live-проверки zero-key метода **или** явного ключа/OAuth с документированным API.
+Новый источник — только после live-проверки zero-key **и** если рынок UA/MD/RO, либо явный ключ/OAuth.

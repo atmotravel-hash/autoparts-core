@@ -180,7 +180,7 @@ export function VehicleSearchWorkspace() {
               </Field>
               <Field label="Display currency">
                 <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                  {["EUR", "UAH", "MDL", "RON", "PLN", "BGN", "USD"].map((c) => (
+                  {["EUR", "UAH", "MDL", "RON", "USD"].map((c) => (
                     <option key={c}>{c}</option>
                   ))}
                 </select>

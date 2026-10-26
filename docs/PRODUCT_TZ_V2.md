@@ -1,41 +1,23 @@
-# ТЗ v2 — Полноценный сервис поиска автозапчастей
+# ТЗ v2 — Сервис поиска автозапчастей (UA · MD · RO)
 
 ## Цель
-С нуля собрать **рабочий веб-сервис** поиска запчастей: агрегирует **все источники, которые отдают публичный каталог без обхода защит**.  
-Для закрытых — зафиксировать **легитимный путь** (офики API / партнёрка / ключ), не CAPTCHA/CF bypass.
+Рабочий веб-сервис поиска запчастей по **всем источникам UA/MD/RO, которые отдают публичный каталог без обхода защит**.  
+Для закрытых — зафиксировать **легитимный путь** (офиц. API / партнёрка / ключ).
 
-## Правила доступа (жёстко)
-1. **Допускается:** публичный GraphQL витрины, Product/ItemList JSON-LD в HTML поиска, официальный API с бесплатным/документированным ключом (opt-in).
-2. **Запрещено:** обход Cloudflare/CAPTCHA, скрытый scrape за логином, подделка сессий.
+## Правила доступа
+1. Допускается: публичный GraphQL, Product/ItemList JSON-LD, официальный API (opt-in).
+2. Запрещено: обход Cloudflare/CAPTCHA.
 3. Старые объявления с известной датой **> 30 дней** — отбрасывать.
+4. Рынки продукта: **только UA · MD · RO**.
 
-## Продукт (сайт)
-- Один продукт: поиск (Vehicle / OEM / Part name).
-- Sidebar + форма + лента результатов + фильтры.
-- Live multi-source, цена, фото, ссылка, страна, возраст.
-- Честные бейджи совместимости (title heuristic ≠ verified OEM).
-
-## Источники
-### Подключаем сейчас (zero-key, проверено ранее)
+## Источники сейчас
 UA: OLX, Prom, Flagma  
-MD: 999.md  
+MD: 999.md, Prom.md  
 RO: OLX  
-PL: OLX  
-BG: OLX, Bazar.bg  
-PT: OLX  
 
-### Пути для «не допускают» (документируем, не обходим)
-| Источник | Почему блок | Путь сбора |
-|----------|-------------|------------|
-| Rozetka | CF на hydrate | Partner / official merchant API при наличии |
-| Allegro | OAuth + CAPTCHA | [developer.allegro.pl](https://developer.allegro.pl) OAuth app |
-| eBay | credentials | eBay Browse API |
-| AUTODOC / DOK / Exist | CF | Партнёрский фид / affiliate API |
-| AUTO.RIA | ключ + лимиты | Free key developers.ria.com (opt-in) |
-| Otomoto/Autovit | cars-first | OLX Group Partner API |
-| Mobile.de / AS24 | auth GraphQL | Official dealer APIs |
+## Пути для «не допускают»
+См. `docs/ACCESS_PATHS.md` (Allegro OAuth, eBay API, RIA key, partner feeds).
 
 ## Критерий готовности
-- Сайт на Vercel: поиск по всем zero-key источникам
+- Сайт на Vercel: поиск по zero-key источникам UA/MD/RO
 - `docs/ACCESS_PATHS.md` — карта «допускает / путь»
-- Прогнан live smoke по ≥1 источнику на рынок

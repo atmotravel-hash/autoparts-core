@@ -103,13 +103,6 @@ const MARKETS: Record<
     currency: "MDL",
     name: "Prom.md",
   },
-  bazar_bg: {
-    origin: "https://bazar.bg",
-    searchUrl: (q) => `https://bazar.bg/obiavi?q=${encodeURIComponent(q)}`,
-    country: "BG",
-    currency: "EUR",
-    name: "Bazar.bg",
-  },
 };
 
 export async function searchJsonLd(

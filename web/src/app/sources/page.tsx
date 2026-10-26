@@ -2,6 +2,8 @@ import { AppShell } from "@/components/AppShell";
 import { LIVE_SOURCES, MARKET_GROUPS, MAX_LISTING_AGE_DAYS } from "@/lib/catalog/types";
 
 const DEFERRED = [
+  { id: "olx_pl / olx_bg / olx_pt", blocker: "Outside product markets", path: "Deferred — UA/MD/RO only" },
+  { id: "bazar_bg", blocker: "Outside product markets", path: "Deferred — UA/MD/RO only" },
   { id: "rozetka", blocker: "CF on detail hydrate", path: "Merchant / partner API" },
   { id: "allegro", blocker: "OAuth + CAPTCHA on public GQL", path: "developer.allegro.pl OAuth app" },
   { id: "ebay", blocker: "App credentials", path: "eBay Browse / Buy API" },
@@ -13,23 +15,15 @@ const DEFERRED = [
   { id: "hotline", blocker: "No Product JSON-LD SSR", path: "No zero-key catalog path" },
   { id: "bigl", blocker: "No Product JSON-LD on search", path: "No zero-key catalog path" },
   { id: "publi24", blocker: "No usable Product LD", path: "No zero-key catalog path" },
-  { id: "mobile_de", blocker: "Auth GraphQL", path: "Official dealer API" },
-  { id: "autoscout24", blocker: "Auth GraphQL", path: "Official dealer API" },
-  { id: "intercars", blocker: "Challenge / partner", path: "Partner portal" },
-  { id: "ovoko", blocker: "Partner portal / CF", path: "Partner portal" },
 ];
 
 const METHOD: Record<string, string> = {
   olx_ua: "GraphQL ListingSearchQuery",
-  olx_pl: "GraphQL ListingSearchQuery",
   olx_ro: "GraphQL ListingSearchQuery",
-  olx_bg: "GraphQL ListingSearchQuery",
-  olx_pt: "GraphQL ListingSearchQuery",
   nine99_md: "GraphQL searchAds",
   prom_ua: "Product JSON-LD",
   flagma_ua: "Product JSON-LD",
   prom_md: "Product JSON-LD",
-  bazar_bg: "ItemList Product JSON-LD",
 };
 
 export default function SourcesPage() {
@@ -43,13 +37,13 @@ export default function SourcesPage() {
       <div className="mb-4 flex flex-wrap gap-2 text-xs font-semibold">
         <span className="rounded-full bg-blue-600 px-3 py-1 text-white">Markets: {markets}</span>
         <span className="rounded-full bg-slate-200 px-3 py-1 text-slate-700">
-          {LIVE_SOURCES.length} live · {DEFERRED.length} deferred paths
+          {LIVE_SOURCES.length} live · deferred paths documented
         </span>
       </div>
 
       <section className="panel mb-4 overflow-hidden">
         <div className="border-b border-[var(--line)] px-4 py-3 font-bold">
-          Operational (zero-key)
+          Operational (UA · MD · RO)
         </div>
         <ul className="divide-y divide-[var(--line)]">
           {LIVE_SOURCES.map((s) => (
@@ -68,11 +62,14 @@ export default function SourcesPage() {
 
       <section className="panel overflow-hidden">
         <div className="border-b border-[var(--line)] px-4 py-3 font-bold">
-          Not allowed publicly — collection path
+          Not in product / not allowed publicly — collection path
         </div>
         <ul className="divide-y divide-[var(--line)]">
           {DEFERRED.map((s) => (
-            <li key={s.id} className="grid gap-1 px-4 py-3 text-sm md:grid-cols-[140px_minmax(0,1fr)_minmax(0,1.2fr)]">
+            <li
+              key={s.id}
+              className="grid gap-1 px-4 py-3 text-sm md:grid-cols-[160px_minmax(0,1fr)_minmax(0,1.2fr)]"
+            >
               <p className="font-semibold">{s.id}</p>
               <p className="text-xs text-[var(--muted)]">{s.blocker}</p>
               <p className="text-xs font-medium text-[var(--ink)]">Path: {s.path}</p>

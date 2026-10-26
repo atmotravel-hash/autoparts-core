@@ -1,11 +1,11 @@
-# Full zero-key catalog set (no CAPTCHA bypass).
+# Product scope: UA · MD · RO only (no CAPTCHA bypass).
 
 sources:
   - id: fixture
     name: Offline Fixture Source
     method: FIXTURE
     status: operational
-    countries: [UA, MD, RO, PL, BG, PT]
+    countries: [UA, MD, RO]
     notes: Demo only — is_demo_data
 
   - id: manual
@@ -50,30 +50,6 @@ sources:
     status: operational
     countries: [RO]
 
-  - id: olx_pl
-    name: OLX Poland
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [PL]
-
-  - id: olx_bg
-    name: OLX Bulgaria
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [BG]
-
-  - id: bazar_bg
-    name: Bazar.bg Bulgaria
-    method: HTML ItemList Product JSON-LD
-    status: operational
-    countries: [BG]
-
-  - id: olx_pt
-    name: OLX Portugal
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [PT]
-
 default_live_source_ids:
   - olx_ua
   - prom_ua
@@ -81,12 +57,16 @@ default_live_source_ids:
   - nine99_md
   - prom_md
   - olx_ro
-  - olx_pl
-  - olx_bg
-  - bazar_bg
-  - olx_pt
 
 deferred_sources:
+  - id: olx_pl
+    reason: "Out of product scope (UA/MD/RO only) — GraphQL method works"
+  - id: olx_bg
+    reason: "Out of product scope (UA/MD/RO only) — GraphQL method works"
+  - id: olx_pt
+    reason: "Out of product scope (UA/MD/RO only) — GraphQL method works"
+  - id: bazar_bg
+    reason: "Out of product scope (UA/MD/RO only) — JSON-LD method works"
   - id: rozetka
     reason: "CF hydrate — path: merchant/partner API"
   - id: allegro

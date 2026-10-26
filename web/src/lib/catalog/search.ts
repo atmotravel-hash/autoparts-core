@@ -6,8 +6,8 @@ import { LIVE_SOURCES, MAX_LISTING_AGE_DAYS } from "./types";
 
 const DEFAULT_SOURCES: SourceId[] = LIVE_SOURCES.map((s) => s.id);
 
-const OLX_IDS = new Set(["olx_ua", "olx_pl", "olx_ro", "olx_bg", "olx_pt"]);
-const JSONLD_IDS = new Set(["prom_ua", "flagma_ua", "prom_md", "bazar_bg"]);
+const OLX_IDS = new Set(["olx_ua", "olx_ro"]);
+const JSONLD_IDS = new Set(["prom_ua", "flagma_ua", "prom_md"]);
 
 async function runSource(id: SourceId, query: string, limit: number): Promise<SearchHit[]> {
   if (OLX_IDS.has(id)) return searchOlx(id as "olx_ua", query, limit);

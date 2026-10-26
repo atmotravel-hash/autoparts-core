@@ -17,15 +17,19 @@ def test_catalog_lists_live_graphql_sources():
     assert catalog["olx_ua"]["status"] == "operational"
     assert catalog["olx_ro"]["status"] == "operational"
     live = default_live_source_ids()
-    for sid in ("olx_ua", "olx_ro", "olx_pl", "olx_bg", "olx_pt", "nine99_md"):
+    for sid in ("olx_ua", "olx_ro", "nine99_md"):
         assert sid in live
+    assert "olx_pl" not in live
 
 
 def test_registry_marks_live_connectors_operational():
     rows = {r["source_id"]: r for r in list_connectors()}
     assert rows["nine99_md"]["operational"] is True
-    for sid in ("olx_ua", "olx_ro", "olx_pl", "olx_bg", "olx_pt"):
+    for sid in ("olx_ua", "olx_ro"):
         assert rows[sid]["operational"] is True, sid
+    assert "olx_pl" not in rows
+    assert "olx_bg" not in rows
+    assert "olx_pt" not in rows
     assert "autodoc" not in rows
     assert "ebay" not in rows
     assert "auto_ria" not in rows
