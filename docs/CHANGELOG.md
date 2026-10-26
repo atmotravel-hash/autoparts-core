@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3 — 2026-10-26 (Europe/Chisinau)
+
+### Broad catalog scan (GraphQL + JSON-LD method)
+- Added **Bazar.bg**, **Satu.kz**, **Deal.by** via parameterized `jsonld_catalog` connector.
+- Full probe of ~60+ thematic sites; deferred list updated honestly in `sources.yaml`.
+- Live-verified priced Product/ItemList JSON-LD only — no CAPTCHA bypass.
+
 ## 0.2.2 — 2026-10-26 (Europe/Chisinau)
 
 ### Ukraine catalog expansion

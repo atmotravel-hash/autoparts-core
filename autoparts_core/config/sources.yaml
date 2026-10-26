@@ -47,6 +47,30 @@ sources:
     tested: 2026-10-26
     notes: Public B2B/marketplace search embeds Product JSON-LD — verified
 
+  - id: bazar_bg
+    name: Bazar.bg Bulgaria
+    method: HTML search ItemList/Product JSON-LD
+    status: operational
+    countries: [BG]
+    tested: 2026-10-26
+    notes: Public classifieds search embeds Product inside ItemList — verified
+
+  - id: satu_kz
+    name: Satu.kz Kazakhstan
+    method: HTML search Product JSON-LD
+    status: operational
+    countries: [KZ]
+    tested: 2026-10-26
+    notes: Prom-group sibling — verified
+
+  - id: deal_by
+    name: Deal.by Belarus
+    method: HTML search Product JSON-LD
+    status: operational
+    countries: [BY]
+    tested: 2026-10-26
+    notes: Prom-group sibling — verified
+
   - id: olx_pl
     name: OLX Poland
     method: GraphQL POST /apigateway/graphql
@@ -80,11 +104,14 @@ default_live_source_ids:
   - olx_ua
   - prom_ua
   - flagma_ua
+  - bazar_bg
   - olx_pl
   - olx_ro
   - olx_bg
   - olx_pt
   - nine99_md
+  - satu_kz
+  - deal_by
 
 # Explicitly deferred (гемор: ключи / OAuth / Cloudflare / партнёрки / лимиты)
 deferred_sources:
@@ -116,13 +143,66 @@ deferred_sources:
     reason: API key for discovery only
   - id: intercars
     reason: Challenge / no public catalog API
-  - id: dok_ua
-    reason: Cloudflare
-  - id: exist_ua
-    reason: Access denied
   - id: otomoto
-    reason: Challenge; cars-first
+    reason: Cars-first; apigateway GraphQL not usable like OLX listings
+  - id: autovit
+    reason: Same Otodom stack as Otomoto — cars-first
+  - id: standvirtual
+    reason: Same Otodom stack — cars-first
   - id: eurocarparts
     reason: Auth-locked GraphQL schema
   - id: goodvin
     reason: Account/terms before use
+  - id: kleinanzeigen
+    reason: No Product JSON-LD in search HTML; gateway GraphQL blocked
+  - id: wallapop
+    reason: No public Product JSON-LD / GraphQL catalog
+  - id: vinted
+    reason: Fashion-first; no usable parts Product JSON-LD
+  - id: bazos
+    reason: Search HTML without Product JSON-LD
+  - id: jofogas
+    reason: No Product JSON-LD in search HTML
+  - id: ss_lv
+    reason: No Product JSON-LD in search HTML
+  - id: mobile_bg
+    reason: No Product JSON-LD; form CGI
+  - id: subito
+    reason: GraphQL 503 / blocked
+  - id: avito
+    reason: Rate-limit / region restrictions
+  - id: drom
+    reason: Weak/no priced Product JSON-LD on search
+  - id: kaspi
+    reason: 429 / anti-bot
+  - id: flagma_pl
+    reason: Search URL 404 in probe
+  - id: rrr_ovoko
+    reason: Cloudflare / partner
+  - id: ceneo
+    reason: Price comparison shell without listing Product JSON-LD
+  - id: makler_md
+    reason: Cloudflare
+  - id: bomba_md
+    reason: 403
+  - id: pieseauto_ro
+    reason: No usable Product JSON-LD on search
+  - id: epiesa_ro
+    reason: Cloudflare
+  - id: iparts_pl
+    reason: Cloudflare
+  - id: autoplius
+    reason: 403
+  - id: skelbiu
+    reason: 403
+  - id: okidoki
+    reason: Cloudflare
+  - id: milanuncios
+    reason: 405 / blocked method
+  - id: publi24
+    reason: Search routes 404 / no Product JSON-LD
+  - id: mobile_de
+    reason: Cars-first; GraphQL blocked
+  - id: autoscout24
+    reason: Auth-required listing GraphQL
+

@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from autoparts_core.connectors.flagma_ua import FlagmaUaConnector
+from autoparts_core.connectors.jsonld_catalog import JsonLdCatalogConnector
 from autoparts_core.connectors.jsonld_client import (
     JsonLdError,
     JsonLdHtmlClient,
@@ -53,14 +54,21 @@ def test_catalog_includes_ua_jsonld_sources():
     catalog = {s["id"]: s for s in load_source_catalog()}
     assert catalog["prom_ua"]["status"] == "operational"
     assert catalog["flagma_ua"]["status"] == "operational"
+    assert catalog["bazar_bg"]["status"] == "operational"
+    assert catalog["satu_kz"]["status"] == "operational"
+    assert catalog["deal_by"]["status"] == "operational"
     assert "prom_ua" in default_live_source_ids()
     assert "flagma_ua" in default_live_source_ids()
+    assert "bazar_bg" in default_live_source_ids()
 
 
 def test_registry_includes_prom_and_flagma():
     rows = {r["source_id"]: r for r in list_connectors()}
     assert rows["prom_ua"]["operational"] is True
     assert rows["flagma_ua"]["operational"] is True
+    assert rows["bazar_bg"]["operational"] is True
+    assert rows["satu_kz"]["operational"] is True
+    assert rows["deal_by"]["operational"] is True
     assert "rozetka" not in rows
 
 
@@ -84,6 +92,47 @@ def test_flagma_parse_listing():
     assert parsed.price_currency == "UAH"
     assert parsed.country == "UA"
     assert parsed.is_demo_data is False
+
+
+BAZAR_ITEMLIST_HTML = """
+<script type="application/ld+json">
+{"@type":"ItemList","itemListElement":[{
+  "@type":"ListItem","position":1,
+  "item":{"@type":"Product","name":"Фар Passat B6",
+    "url":"https://bazar.bg/obiava-54470098/far-passat",
+    "image":"//cdn.example/a.webp",
+    "offers":{"@type":"Offer","price":50,"priceCurrency":"EUR",
+      "seller":{"@type":"Organization","name":"User 1","url":"https://bazar.bg/ads/user/1"}}}
+}]}
+</script>
+"""
+
+
+def test_bazar_itemlist_extract_and_parse():
+    products = extract_jsonld_products(BAZAR_ITEMLIST_HTML)
+    assert len(products) == 1
+    parsed = JsonLdCatalogConnector("bazar_bg").parse_listing(products[0])
+    assert parsed.source_listing_id == "54470098"
+    assert parsed.price_amount == 50.0
+    assert parsed.price_currency == "EUR"
+    assert parsed.country == "BG"
+    assert parsed.image_urls[0].startswith("https://")
+    assert parsed.seller.get("display_name") == "User 1"
+
+
+def test_satu_parse_listing():
+    doc = {
+        "@type": "Product",
+        "name": "Фара Passat",
+        "url": "https://satu.kz/p127273259-fara.html",
+        "sku": "X1",
+        "offers": {"@type": "Offer", "price": "1000", "priceCurrency": "KZT", "url": "https://satu.kz/p127273259-fara.html"},
+    }
+    parsed = JsonLdCatalogConnector("satu_kz").parse_listing(doc)
+    assert parsed.source_listing_id == "127273259"
+    assert parsed.price_amount == 1000.0
+    assert parsed.price_currency == "KZT"
+    assert parsed.country == "KZ"
 
 
 def test_jsonld_client_refuses_captcha_html():
@@ -133,3 +182,30 @@ def test_live_flagma_ua_search():
     parsed = c.parse_listing(doc)
     assert parsed.title
     assert parsed.canonical_url.startswith("https://flagma.ua/")
+
+
+@pytest.mark.live
+def test_live_bazar_bg_search():
+    import os
+
+    if os.environ.get("RUN_LIVE_GRAPHQL") != "1":
+        pytest.skip("live catalog disabled")
+    c = JsonLdCatalogConnector("bazar_bg")
+    hits = c.search("фар Passat", pagination={"limit": 3})
+    assert hits
+    parsed = c.parse_listing(c.fetch_listing(str(hits[0].url)))
+    assert parsed.price_amount is not None
+    assert parsed.canonical_url.startswith("https://bazar.bg/")
+
+
+@pytest.mark.live
+def test_live_satu_kz_search():
+    import os
+
+    if os.environ.get("RUN_LIVE_GRAPHQL") != "1":
+        pytest.skip("live catalog disabled")
+    c = JsonLdCatalogConnector("satu_kz")
+    hits = c.search("фара passat", pagination={"limit": 3})
+    assert hits
+    parsed = c.parse_listing(c.fetch_listing(str(hits[0].url)))
+    assert parsed.price_amount is not None
