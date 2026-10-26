@@ -13,3 +13,11 @@ exports/
 dist/
 *.zip
 !releases/*.zip
+
+# Next.js / Vercel
+web/node_modules/
+web/.next/
+web/out/
+web/.vercel/
+web/npm-debug.log*
+.vercel/

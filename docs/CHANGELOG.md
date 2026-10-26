@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — 2026-10-26 (Europe/Chisinau)
+
+### Website (Vercel)
+- Next.js site in `web/`: landing, live search, sources page.
+- API `GET /api/search` uses the same public GraphQL / JSON-LD method.
+- Streamlit remains local prototype; website is the product surface.
+
 ## 0.2.4 — 2026-10-26 (Europe/Chisinau)
 
 ### Scope cleanup
