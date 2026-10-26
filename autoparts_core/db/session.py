@@ -96,6 +96,13 @@ def _seed_reference_data() -> None:
             ("olx_ro", "OLX Romania", "PUBLIC_PAGE", "RO", "GraphQL POST /apigateway/graphql — tested"),
             ("olx_bg", "OLX Bulgaria", "PUBLIC_PAGE", "BG", "GraphQL POST /apigateway/graphql — tested"),
             ("olx_pt", "OLX Portugal", "PUBLIC_PAGE", "PT", "GraphQL POST /apigateway/graphql — tested"),
+            (
+                "auto_ria",
+                "AUTO.RIA",
+                "OFFICIAL_API",
+                "UA",
+                "developers.ria.com — needs AUTORIA_API_KEY; attribution https://auto.ria.com",
+            ),
         ]
         for sid, name, access, countries, notes in live_markets:
             if session.query(Marketplace).filter_by(source_id=sid).count() == 0:

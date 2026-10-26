@@ -80,11 +80,11 @@ sources:
 
   - id: auto_ria
     name: AUTO.RIA
-    method: Official developers.ria.com API (+ public search JSON for cars)
+    method: Official GET developers.ria.com/auto/search + /auto/info
     graphql: false
     status: credentials_missing
     countries: [UA]
-    notes: Free API key at developers.ria.com required for production; public search is vehicle-centric
+    notes: Free API key at https://developers.ria.com (profile). Requires crawlable link to auto.ria.com. Free tier ~30 req/hour. Donor cars via spareParts=1.
 
   - id: ebay
     name: eBay
@@ -215,3 +215,4 @@ default_live_source_ids:
   - olx_bg
   - olx_pt
   - nine99_md
+  - auto_ria

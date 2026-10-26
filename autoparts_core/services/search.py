@@ -24,7 +24,12 @@ def resolve_default_sources() -> list[str]:
     settings = get_settings()
     if not settings.enable_live_graphql:
         return ["fixture"]
-    ids = list(default_live_source_ids() or operational_source_ids(include_fixture=False))
+    preferred = list(default_live_source_ids() or [])
+    # Only include connectors that are currently operational (e.g. skip auto_ria without key)
+    live = set(operational_source_ids(include_fixture=False))
+    ids = [sid for sid in preferred if sid in live]
+    if not ids:
+        ids = list(live)
     if settings.include_fixture_in_live_search and "fixture" not in ids:
         ids.append("fixture")
     return ids or ["fixture"]
@@ -65,6 +70,18 @@ def run_search(
         filters["country"] = vehicle.preferred_countries
     if vehicle.condition:
         filters["condition"] = vehicle.condition.value
+    if vehicle.make:
+        filters["make"] = vehicle.make
+    if vehicle.model:
+        filters["model"] = vehicle.model
+    if vehicle.year:
+        filters["year"] = vehicle.year
+    if vehicle.generation:
+        filters["generation"] = vehicle.generation
+    if vehicle.part_name:
+        filters["part_name"] = vehicle.part_name
+        # Donor vehicles / autos-for-parts when searching parts
+        filters["spare_parts_donors"] = True
 
     all_views: list[ListingView] = []
     errors: list[dict] = []

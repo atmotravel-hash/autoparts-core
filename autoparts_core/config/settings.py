@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     allegro_client_secret: str | None = None
     fx_api_key: str | None = None
     vin_decode_api_key: str | None = None
+    # FREE key: register at https://developers.ria.com → Мій профіль → API key
+    autoria_api_key: str | None = None
+    autoria_min_interval_seconds: float = 2.5
 
 
 def get_settings() -> Settings:

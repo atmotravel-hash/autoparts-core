@@ -7,6 +7,7 @@ from typing import Any
 
 import yaml
 
+from autoparts_core.connectors.autoria import AutoRiaConnector
 from autoparts_core.connectors.base import SourceConnector
 from autoparts_core.connectors.fixture import FixtureConnector
 from autoparts_core.connectors.manual import ManualImportConnector
@@ -40,11 +41,13 @@ def get_registry() -> dict[str, SourceConnector]:
         manual = ManualImportConnector()
         nine = Nine99MdConnector()
         olx = build_olx_connectors()
+        autoria = AutoRiaConnector()
         _REGISTRY = {
             fixture.source_id: fixture,
             manual.source_id: manual,
             nine.source_id: nine,
             **olx,
+            autoria.source_id: autoria,
             # Candidate stubs — not operational
             "ebay": UntestedStubConnector("ebay", "eBay (authorized API required)"),
             "allegro": UntestedStubConnector("allegro", "Allegro (authorized API required)"),
