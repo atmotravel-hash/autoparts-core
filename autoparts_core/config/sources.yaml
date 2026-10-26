@@ -55,22 +55,6 @@ sources:
     tested: 2026-10-26
     notes: Public classifieds search embeds Product inside ItemList — verified
 
-  - id: satu_kz
-    name: Satu.kz Kazakhstan
-    method: HTML search Product JSON-LD
-    status: operational
-    countries: [KZ]
-    tested: 2026-10-26
-    notes: Prom-group sibling — verified
-
-  - id: deal_by
-    name: Deal.by Belarus
-    method: HTML search Product JSON-LD
-    status: operational
-    countries: [BY]
-    tested: 2026-10-26
-    notes: Prom-group sibling — verified
-
   - id: olx_pl
     name: OLX Poland
     method: GraphQL POST /apigateway/graphql
@@ -110,11 +94,13 @@ default_live_source_ids:
   - olx_bg
   - olx_pt
   - nine99_md
-  - satu_kz
-  - deal_by
 
 # Explicitly deferred (гемор: ключи / OAuth / Cloudflare / партнёрки / лимиты)
 deferred_sources:
+  - id: satu_kz
+    reason: Outside EU/MD/UA focus (Kazakhstan)
+  - id: deal_by
+    reason: Outside EU/MD/UA focus (Belarus)
   - id: auto_ria
     reason: Free API key + 30 req/h + mostly cars/donors, not parts listings
   - id: ebay

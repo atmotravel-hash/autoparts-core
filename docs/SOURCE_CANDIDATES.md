@@ -11,8 +11,7 @@ Never mark operational just because a URL is known. No CAPTCHA/CF bypass.
 | Prom.ua | Yes | Product JSON-LD | None | Yes | Yes | Search + detail |
 | Flagma.ua | Yes | Product JSON-LD | None | Yes | Yes | B2B/marketplace |
 | Bazar.bg | Yes | ItemList JSON-LD | None | Yes | Yes | Classifieds EUR |
-| Satu.kz | Yes | Product JSON-LD | None | Yes | Yes | Prom-group |
-| Deal.by | Yes | Product JSON-LD | None | Yes | Yes | Prom-group |
+| Satu.kz / Deal.by | Yes | Product JSON-LD | None | Yes | No | Outside EU/MD/UA focus |
 | Bigl / Hotline | Partial | HTML | None | Yes | No | No priced Product SSR |
 | Rozetka | Partial | Search API IDs | None | Yes | No | Hydrate CF |
 | Allegro / eBay / AUTODOC | No | Blocked/credentials | — | Yes | No | Deferred |

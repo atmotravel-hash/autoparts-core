@@ -16,8 +16,6 @@
 | `bazar_bg` | Болгария | HTML ItemList → Product JSON-LD |
 | `olx_pt` | Португалия | GraphQL ListingSearchQuery |
 | `nine99_md` | Молдова | `POST /graphql` searchAds |
-| `satu_kz` | Казахстан | HTML Product JSON-LD (Prom-group) |
-| `deal_by` | Беларусь | HTML Product JSON-LD (Prom-group) |
 | `fixture` / `manual` | — | демо / импорт |
 
 ## Полный скан (что проверено)
@@ -27,7 +25,9 @@
 - 999.md GraphQL
 - Prom.ua / Flagma.ua JSON-LD
 - Bazar.bg ItemList/Product JSON-LD
-- Satu.kz / Deal.by (Prom-group) JSON-LD
+
+### Вне фокуса EU/MD/UA
+- Satu.kz / Deal.by — метод тот же (Prom-group JSON-LD), но рынки KZ/BY не нужны → `deferred_sources`
 
 ### Отложено (гемор / блок / бесполезно для запчастей)
 См. `deferred_sources` в `sources.yaml`: Rozetka, Bigl, Hotline, Allo, DOK, Exist, AUTODOC, Allegro, eBay, Otomoto/Autovit/Standvirtual (cars-first), Kleinanzeigen, Wallapop, Vinted, Bazos, Jófogás, SS.LV, Mobile.bg, Subito, Avito, Kaspi, RRR/Ovoko, Ceneo, Makler.md, Bomba.md, Autoplius, Skelbiu, Publi24, Mobile.de, AutoScout24, и др.

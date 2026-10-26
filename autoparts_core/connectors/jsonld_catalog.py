@@ -38,32 +38,6 @@ JSONLD_MARKETS: dict[str, dict[str, Any]] = {
         "confidence": 0.84,
         "terms": "Reads schema.org Product nodes inside ItemList on public Bazar.bg search HTML.",
     },
-    "satu_kz": {
-        "source_name": "Satu.kz Kazakhstan (JSON-LD catalog)",
-        "origin": "https://satu.kz",
-        "country": "KZ",
-        "languages": ["ru", "kk", "en"],
-        "default_currency": "KZT",
-        "search_url": "https://satu.kz/search?search_term={query}",
-        "id_regex": r"/p(\d+)-",
-        "page_size": 10,
-        "seller_type": "BUSINESS",
-        "confidence": 0.86,
-        "terms": "Prom-group public search HTML with schema.org Product JSON-LD.",
-    },
-    "deal_by": {
-        "source_name": "Deal.by Belarus (JSON-LD catalog)",
-        "origin": "https://deal.by",
-        "country": "BY",
-        "languages": ["ru", "be", "en"],
-        "default_currency": "BYN",
-        "search_url": "https://deal.by/search?search_term={query}",
-        "id_regex": r"/p(\d+)-",
-        "page_size": 10,
-        "seller_type": "BUSINESS",
-        "confidence": 0.85,
-        "terms": "Prom-group public search HTML with schema.org Product JSON-LD.",
-    },
 }
 
 
