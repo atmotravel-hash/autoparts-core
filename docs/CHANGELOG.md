@@ -1,9 +1,18 @@
 # Changelog
 
+## 0.5.0 — 2026-10-26 (Europe/Chisinau)
+
+### Full zero-key catalog rebuild
+- Live markets: **UA · MD · RO · PL · BG · PT** (10 sources).
+- Restored `olx_pl` / `olx_bg` / `olx_pt`, `bazar_bg`, `prom_md`.
+- `docs/ACCESS_PATHS.md` — paths for blocked sources (no CAPTCHA bypass).
+- Web UI: sources by market, deferred paths on Source Connectors page.
+- Stale classifieds (>30 days) still dropped.
+
 ## 0.4.0 — 2026-10-26 (Europe/Chisinau)
 
-### Product scope lock
-- Markets **UA · MD · RO only** (drop PL/BG/PT/Bazar/Baltic from live search).
+### Product scope lock (superseded by 0.5.0)
+- Temporary UA · MD · RO-only lock; later re-expanded to all zero-key sources.
 - Stale classifieds (>30 days) dropped when age is known.
 - Web UI rebuilt as search service (mockup shell) per `docs/PRODUCT_TZ.md`.
 

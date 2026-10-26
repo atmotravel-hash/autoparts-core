@@ -1,34 +1,31 @@
-# Источники — упрощённый MVP
+# Источники — GraphQL / JSON-LD
 
 Метод проверки: публичный GraphQL **или** Product/ItemList JSON-LD в HTML поиска.  
-Без ключей, без обхода CAPTCHA/Cloudflare.
+Без ключей, без обхода CAPTCHA/Cloudflare. Карта путей для закрытых: `docs/ACCESS_PATHS.md`.
 
-## В поиске (без ключей, проверено live)
+## В поиске (zero-key, live)
 
 | ID | Рынок | Метод |
 |----|--------|--------|
-| `olx_ua` | Украина | `POST /apigateway/graphql` |
-| `prom_ua` | Украина | HTML search → Product JSON-LD |
-| `flagma_ua` | Украина | HTML search → Product JSON-LD |
-| `nine99_md` | Молдова | `POST /graphql` searchAds |
-| `olx_ro` | Румыния | GraphQL ListingSearchQuery |
+| `olx_ua` | UA | `POST /apigateway/graphql` ListingSearchQuery |
+| `prom_ua` | UA | HTML search → Product JSON-LD |
+| `flagma_ua` | UA | HTML search → Product JSON-LD |
+| `nine99_md` | MD | `POST /graphql` searchAds |
+| `prom_md` | MD | HTML search → Product JSON-LD |
+| `olx_ro` | RO | GraphQL ListingSearchQuery |
+| `olx_pl` | PL | GraphQL ListingSearchQuery |
+| `olx_bg` | BG | GraphQL ListingSearchQuery |
+| `bazar_bg` | BG | ItemList / Product JSON-LD |
+| `olx_pt` | PT | GraphQL ListingSearchQuery |
 | `fixture` / `manual` | — | демо / импорт |
 
-**Продуктовый scope:** только **UA · MD · RO**. Объявления старше 30 дней отбрасываются.
+**Свежесть:** объявления старше 30 дней отбрасываются (если возраст известен).
 
-## Полный скан (что проверено)
+## Отложено (не обходим)
 
-### Работают тем же методом
-- OLX: PL/RO/BG/PT (+ UA — GraphQL, иногда 403)
-- 999.md GraphQL
-- Prom.ua / Flagma.ua JSON-LD
-- Bazar.bg ItemList/Product JSON-LD
+Rozetka, Allegro, eBay, AUTODOC/DOK/Exist, AUTO.RIA (opt-in key), Otomoto/Autovit, Hotline/Bigl, Publi24/Jófogás, Mobile.de/AS24, Inter Cars/Ovoko — см. `docs/ACCESS_PATHS.md` и `deferred_sources` в `sources.yaml`.
 
-### Вне фокуса EU/MD/UA
-- Satu.kz / Deal.by — метод тот же (Prom-group JSON-LD), но рынки KZ/BY не нужны → `deferred_sources`
-
-### Отложено (гемор / блок / бесполезно для запчастей)
-См. `deferred_sources` в `sources.yaml`: Rozetka, Bigl, Hotline, Allo, DOK, Exist, AUTODOC, Allegro, eBay, Otomoto/Autovit/Standvirtual (cars-first), Kleinanzeigen, Wallapop, Vinted, Bazos, Jófogás, SS.LV, Mobile.bg, Subito, Avito, Kaspi, RRR/Ovoko, Ceneo, Makler.md, Bomba.md, Autoplius, Skelbiu, Publi24, Mobile.de, AutoScout24, и др.
+KZ/BY (Satu.kz / Deal.by) — вне scope.
 
 ## Live-тест
 `RUN_LIVE_GRAPHQL=1 pytest -m live`

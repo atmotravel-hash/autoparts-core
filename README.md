@@ -10,8 +10,9 @@ Next.js в папке [`web/`](web/) — лендинг, поиск, источ�
 cd web && npm install && npm run dev
 ```
 
-Live-каталоги: OLX UA/PL/RO/BG/PT, Prom.ua, Flagma.ua, Bazar.bg, 999.md.  
-Метод: публичный GraphQL / Product JSON-LD. CAPTCHA не обходим.
+Live-каталоги: OLX UA/PL/RO/BG/PT, Prom.ua, Flagma.ua, Prom.md, Bazar.bg, 999.md.  
+Метод: публичный GraphQL / Product JSON-LD. CAPTCHA не обходим.  
+Закрытые источники → легитимные пути в [`docs/ACCESS_PATHS.md`](docs/ACCESS_PATHS.md).
 
 ## Python-ядро (локально)
 
@@ -25,5 +26,7 @@ streamlit run app/Home.py
 
 ## Документация
 
+- `docs/PRODUCT_TZ_V2.md` — ТЗ полного сервиса  
+- `docs/ACCESS_PATHS.md` — допускает / путь сбора  
 - `docs/GRAPHQL_SOURCES.md` — рабочие и отложенные источники  
 - `web/README.md` — сайт и Vercel

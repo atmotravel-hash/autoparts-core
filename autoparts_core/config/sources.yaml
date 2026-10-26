@@ -1,84 +1,121 @@
-# Active sources — product scope: UA · MD · RO only.
+# Full zero-key catalog set (no CAPTCHA bypass).
 
 sources:
   - id: fixture
     name: Offline Fixture Source
     method: FIXTURE
     status: operational
-    countries: [UA, MD, RO]
-    notes: Demo data only — labelled is_demo_data
+    countries: [UA, MD, RO, PL, BG, PT]
+    notes: Demo only — is_demo_data
 
   - id: manual
     name: Manual URL Import
     method: MANUAL_IMPORT
     status: operational
     countries: []
-    notes: User URL/CSV metadata — SSRF-safe
 
   - id: olx_ua
     name: OLX Ukraine
     method: GraphQL POST /apigateway/graphql
     status: operational
     countries: [UA]
-    tested: 2026-10-26
 
   - id: prom_ua
     name: Prom.ua Ukraine
-    method: HTML search Product JSON-LD
+    method: HTML Product JSON-LD
     status: operational
     countries: [UA]
-    tested: 2026-10-26
 
   - id: flagma_ua
     name: Flagma.ua Ukraine
-    method: HTML search Product JSON-LD
+    method: HTML Product JSON-LD
     status: operational
     countries: [UA]
-    tested: 2026-10-26
 
   - id: nine99_md
     name: 999.md Moldova
     method: GraphQL POST https://999.md/graphql
     status: operational
     countries: [MD]
-    tested: 2026-10-26
+
+  - id: prom_md
+    name: Prom.md Moldova
+    method: HTML Product JSON-LD
+    status: operational
+    countries: [MD]
 
   - id: olx_ro
     name: OLX Romania
     method: GraphQL POST /apigateway/graphql
     status: operational
     countries: [RO]
-    tested: 2026-10-26
+
+  - id: olx_pl
+    name: OLX Poland
+    method: GraphQL POST /apigateway/graphql
+    status: operational
+    countries: [PL]
+
+  - id: olx_bg
+    name: OLX Bulgaria
+    method: GraphQL POST /apigateway/graphql
+    status: operational
+    countries: [BG]
+
+  - id: bazar_bg
+    name: Bazar.bg Bulgaria
+    method: HTML ItemList Product JSON-LD
+    status: operational
+    countries: [BG]
+
+  - id: olx_pt
+    name: OLX Portugal
+    method: GraphQL POST /apigateway/graphql
+    status: operational
+    countries: [PT]
 
 default_live_source_ids:
   - olx_ua
   - prom_ua
   - flagma_ua
   - nine99_md
+  - prom_md
   - olx_ro
+  - olx_pl
+  - olx_bg
+  - bazar_bg
+  - olx_pt
 
 deferred_sources:
-  - id: olx_pl
-    reason: Outside product scope (UA/MD/RO only)
-  - id: olx_bg
-    reason: Outside product scope
-  - id: olx_pt
-    reason: Outside product scope
-  - id: bazar_bg
-    reason: Outside product scope
-  - id: baltic_sources
-    reason: LT/LV/EE out of scope
-  - id: auto_ria
-    reason: Key + limits; cars/donors
-  - id: ebay
-    reason: Credentials
-  - id: allegro
-    reason: OAuth / CAPTCHA
-  - id: autodoc
-    reason: Cloudflare
   - id: rozetka
-    reason: CF hydrate
-  - id: satu_kz
-    reason: Outside scope
-  - id: deal_by
-    reason: Outside scope
+    reason: "CF hydrate — path: merchant/partner API"
+  - id: allegro
+    reason: "OAuth — path: developer.allegro.pl"
+  - id: ebay
+    reason: "Credentials — path: eBay Browse API"
+  - id: autodoc
+    reason: "CF — path: affiliate/B2B feed"
+  - id: dok_ua
+    reason: "CF — path: partner feed"
+  - id: exist_ua
+    reason: "403 — path: B2B account"
+  - id: auto_ria
+    reason: "Free key developers.ria.com — opt-in ENABLE_AUTORIA"
+  - id: otomoto
+    reason: "cars-first — path: OLX Group Partner API"
+  - id: hotline
+    reason: "No Product JSON-LD SSR"
+  - id: bigl
+    reason: "No Product JSON-LD on search"
+  - id: ovoko
+    reason: "Partner portal / CF"
+  - id: intercars
+    reason: "Challenge — partner portal"
+  - id: publi24
+    reason: "No usable Product JSON-LD"
+  - id: lajumate
+    reason: "No Product JSON-LD"
+  - id: mobile_de
+    reason: "Auth GraphQL — dealer API"
+  - id: autoscout24
+    reason: "Auth GraphQL — official API"

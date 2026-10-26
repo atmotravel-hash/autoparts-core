@@ -30,7 +30,10 @@ const MARKETS: Record<
   { host: string; country: string; currency: string; name: string; partsCategory?: string }
 > = {
   olx_ua: { host: "www.olx.ua", country: "UA", currency: "UAH", name: "OLX Ukraine", partsCategory: "2550" },
+  olx_pl: { host: "www.olx.pl", country: "PL", currency: "PLN", name: "OLX Poland" },
   olx_ro: { host: "www.olx.ro", country: "RO", currency: "RON", name: "OLX Romania" },
+  olx_bg: { host: "www.olx.bg", country: "BG", currency: "BGN", name: "OLX Bulgaria" },
+  olx_pt: { host: "www.olx.pt", country: "PT", currency: "EUR", name: "OLX Portugal" },
 };
 
 function photoUrl(link?: string | null): string | null {

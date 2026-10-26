@@ -96,6 +96,20 @@ const MARKETS: Record<
     currency: "UAH",
     name: "Flagma.ua",
   },
+  prom_md: {
+    origin: "https://prom.md",
+    searchUrl: (q) => `https://prom.md/search?search_term=${encodeURIComponent(q)}`,
+    country: "MD",
+    currency: "MDL",
+    name: "Prom.md",
+  },
+  bazar_bg: {
+    origin: "https://bazar.bg",
+    searchUrl: (q) => `https://bazar.bg/obiavi?q=${encodeURIComponent(q)}`,
+    country: "BG",
+    currency: "EUR",
+    name: "Bazar.bg",
+  },
 };
 
 export async function searchJsonLd(

@@ -6,15 +6,17 @@ import { LIVE_SOURCES, MAX_LISTING_AGE_DAYS } from "./types";
 
 const DEFAULT_SOURCES: SourceId[] = LIVE_SOURCES.map((s) => s.id);
 
+const OLX_IDS = new Set(["olx_ua", "olx_pl", "olx_ro", "olx_bg", "olx_pt"]);
+const JSONLD_IDS = new Set(["prom_ua", "flagma_ua", "prom_md", "bazar_bg"]);
+
 async function runSource(id: SourceId, query: string, limit: number): Promise<SearchHit[]> {
-  if (id === "olx_ua" || id === "olx_ro") return searchOlx(id, query, limit);
-  if (id === "prom_ua" || id === "flagma_ua") return searchJsonLd(id, query, limit);
+  if (OLX_IDS.has(id)) return searchOlx(id as "olx_ua", query, limit);
+  if (JSONLD_IDS.has(id)) return searchJsonLd(id as "prom_ua", query, limit);
   if (id === "nine99_md") return searchNine99(query, limit);
   return [];
 }
 
 function isFresh(hit: SearchHit): boolean {
-  // Strict: unknown age from classifieds is dropped; catalog JSON-LD has ageDays=0.
   if (hit.ageDays == null) return false;
   return hit.ageDays <= MAX_LISTING_AGE_DAYS;
 }
@@ -33,7 +35,7 @@ export async function runCatalogSearch(opts: {
       droppedStale: 0,
       errors: [{ sourceId: "input", message: "Empty query" }],
       tookMs: 0,
-      markets: ["UA", "MD", "RO"],
+      markets: [...new Set(LIVE_SOURCES.map((s) => s.country))],
     };
   }
 
@@ -41,7 +43,7 @@ export async function runCatalogSearch(opts: {
     LIVE_SOURCES.some((x) => x.id === s),
   ) as SourceId[];
 
-  const limit = Math.min(opts.limitPerSource ?? 10, 20);
+  const limit = Math.min(opts.limitPerSource ?? 8, 16);
   const settled = await Promise.allSettled(wanted.map((id) => runSource(id, query, limit)));
 
   const raw: SearchHit[] = [];
@@ -69,6 +71,6 @@ export async function runCatalogSearch(opts: {
     droppedStale,
     errors,
     tookMs: Date.now() - started,
-    markets: ["UA", "MD", "RO"],
+    markets: [...new Set(LIVE_SOURCES.map((s) => s.country))],
   };
 }

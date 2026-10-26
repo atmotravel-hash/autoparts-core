@@ -59,7 +59,6 @@ query ListingSearchQuery($searchParameters: [SearchParameter!]!) {
 }
 """
 
-# Product scope: UA + RO only (MD via 999.md).
 OLX_MARKETS: dict[str, dict[str, Any]] = {
     "olx_ua": {
         "host": "www.olx.ua",
@@ -69,6 +68,14 @@ OLX_MARKETS: dict[str, dict[str, Any]] = {
         "parts_category_id": "2550",
         "source_name": "OLX Ukraine (GraphQL)",
     },
+    "olx_pl": {
+        "host": "www.olx.pl",
+        "country": "PL",
+        "languages": ["pl", "en"],
+        "default_currency": "PLN",
+        "parts_category_id": None,
+        "source_name": "OLX Poland (GraphQL)",
+    },
     "olx_ro": {
         "host": "www.olx.ro",
         "country": "RO",
@@ -76,6 +83,22 @@ OLX_MARKETS: dict[str, dict[str, Any]] = {
         "default_currency": "RON",
         "parts_category_id": None,
         "source_name": "OLX Romania (GraphQL)",
+    },
+    "olx_bg": {
+        "host": "www.olx.bg",
+        "country": "BG",
+        "languages": ["bg", "en"],
+        "default_currency": "BGN",
+        "parts_category_id": None,
+        "source_name": "OLX Bulgaria (GraphQL)",
+    },
+    "olx_pt": {
+        "host": "www.olx.pt",
+        "country": "PT",
+        "languages": ["pt", "en"],
+        "default_currency": "EUR",
+        "parts_category_id": None,
+        "source_name": "OLX Portugal (GraphQL)",
     },
 }
 

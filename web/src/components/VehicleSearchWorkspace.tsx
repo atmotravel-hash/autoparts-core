@@ -2,8 +2,10 @@
 
 import { FormEvent, useEffect, useMemo, useState, useTransition } from "react";
 import type { SearchHit, SearchResponse, SourceId } from "@/lib/catalog/types";
-import { LIVE_SOURCES, MAX_LISTING_AGE_DAYS } from "@/lib/catalog/types";
+import { LIVE_SOURCES, MARKET_GROUPS, MAX_LISTING_AGE_DAYS } from "@/lib/catalog/types";
 import { estimateFitment, formatMoney } from "@/lib/fitment";
+
+const MARKET_LABEL = MARKET_GROUPS.map((g) => g.country).join(" · ");
 
 const MAKES = ["Volkswagen", "BMW", "Audi", "Skoda", "Toyota", "Mercedes-Benz", "Renault", "Ford"];
 const MODELS = ["Passat", "Golf", "3 Series", "A4", "Octavia", "C-Class", "Focus", "Megane"];
@@ -98,9 +100,12 @@ export function VehicleSearchWorkspace() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2 text-xs font-semibold">
-        <span className="rounded-full bg-blue-600 px-3 py-1 text-white">Markets: UA · MD · RO</span>
+        <span className="rounded-full bg-blue-600 px-3 py-1 text-white">Markets: {MARKET_LABEL}</span>
         <span className="rounded-full bg-slate-200 px-3 py-1 text-slate-700">
           Fresh ≤ {MAX_LISTING_AGE_DAYS}d · stale ads dropped
+        </span>
+        <span className="rounded-full bg-slate-200 px-3 py-1 text-slate-700">
+          {LIVE_SOURCES.length} zero-key sources
         </span>
       </div>
 
@@ -166,39 +171,64 @@ export function VehicleSearchWorkspace() {
               </Field>
               <Field label="Ship to">
                 <select value={destination} onChange={(e) => setDestination(e.target.value)}>
-                  {["UA", "MD", "RO"].map((c) => (
-                    <option key={c}>{c}</option>
+                  {MARKET_GROUPS.map((g) => (
+                    <option key={g.country} value={g.country}>
+                      {g.country}
+                    </option>
                   ))}
                 </select>
               </Field>
               <Field label="Display currency">
                 <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                  {["EUR", "UAH", "MDL", "RON", "USD"].map((c) => (
+                  {["EUR", "UAH", "MDL", "RON", "PLN", "BGN", "USD"].map((c) => (
                     <option key={c}>{c}</option>
                   ))}
                 </select>
               </Field>
             </div>
 
-            <div className="mt-4">
-              <p className="mb-2 text-xs font-semibold text-[var(--muted)]">Sources</p>
-              <div className="flex flex-wrap gap-2">
-                {LIVE_SOURCES.map((s) => {
-                  const on = sources.includes(s.id);
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => toggleSource(s.id)}
-                      className={`rounded-md border px-2.5 py-1 text-xs font-semibold ${
-                        on ? "border-blue-600 bg-blue-600 text-white" : "border-[var(--line)] text-[var(--muted)]"
-                      }`}
-                    >
-                      {s.name}
-                    </button>
-                  );
-                })}
+            <div className="mt-4 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="text-xs font-semibold text-[var(--muted)]">Sources by market</p>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="btn-ghost px-2 py-1 text-[11px]"
+                    onClick={() => setSources(LIVE_SOURCES.map((s) => s.id))}
+                  >
+                    All
+                  </button>
+                  <button type="button" className="btn-ghost px-2 py-1 text-[11px]" onClick={() => setSources([])}>
+                    None
+                  </button>
+                </div>
               </div>
+              {MARKET_GROUPS.map((group) => (
+                <div key={group.country}>
+                  <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-[var(--muted)]">
+                    {group.label}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {LIVE_SOURCES.filter((s) => group.sourceIds.includes(s.id)).map((s) => {
+                      const on = sources.includes(s.id);
+                      return (
+                        <button
+                          key={s.id}
+                          type="button"
+                          onClick={() => toggleSource(s.id)}
+                          className={`rounded-md border px-2.5 py-1 text-xs font-semibold ${
+                            on
+                              ? "border-blue-600 bg-blue-600 text-white"
+                              : "border-[var(--line)] text-[var(--muted)]"
+                          }`}
+                        >
+                          {s.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">

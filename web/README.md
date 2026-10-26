@@ -20,4 +20,6 @@ Region: `fra1`
 
 ## API
 
-`GET /api/search?q=фара+Passat+B8&sources=olx_ua,prom_ua&limit=6`
+`GET /api/search?q=фара+Passat+B8&sources=olx_ua,prom_ua,nine99_md,olx_pl&limit=6`
+
+Default sources (all markets): `olx_ua,prom_ua,flagma_ua,nine99_md,prom_md,olx_ro,olx_pl,olx_bg,bazar_bg,olx_pt`

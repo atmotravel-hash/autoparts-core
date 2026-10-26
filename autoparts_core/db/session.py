@@ -96,6 +96,10 @@ def _seed_reference_data() -> None:
             ("olx_ro", "OLX Romania", "PUBLIC_PAGE", "RO", "GraphQL POST /apigateway/graphql — tested"),
             ("olx_bg", "OLX Bulgaria", "PUBLIC_PAGE", "BG", "GraphQL POST /apigateway/graphql — tested"),
             ("olx_pt", "OLX Portugal", "PUBLIC_PAGE", "PT", "GraphQL POST /apigateway/graphql — tested"),
+            ("prom_ua", "Prom.ua", "PUBLIC_PAGE", "UA", "Product JSON-LD on public search HTML"),
+            ("flagma_ua", "Flagma.ua", "PUBLIC_PAGE", "UA", "Product JSON-LD on public search HTML"),
+            ("prom_md", "Prom.md", "PUBLIC_PAGE", "MD", "Product JSON-LD on public search HTML"),
+            ("bazar_bg", "Bazar.bg", "PUBLIC_PAGE", "BG", "ItemList Product JSON-LD on public search HTML"),
             (
                 "auto_ria",
                 "AUTO.RIA",
