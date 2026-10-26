@@ -1,12 +1,11 @@
-# Active sources only — no credential/CAPTCHA/partner-hassle in the default path.
-# Deferred ideas live under deferred_sources (not loaded into search).
+# Active sources — product scope: UA · MD · RO only.
 
 sources:
   - id: fixture
     name: Offline Fixture Source
     method: FIXTURE
     status: operational
-    countries: [DE, PL, LT, UA, MD]
+    countries: [UA, MD, RO]
     notes: Demo data only — labelled is_demo_data
 
   - id: manual
@@ -15,14 +14,6 @@ sources:
     status: operational
     countries: []
     notes: User URL/CSV metadata — SSRF-safe
-
-  - id: nine99_md
-    name: 999.md Moldova
-    method: GraphQL POST https://999.md/graphql
-    status: operational
-    countries: [MD]
-    tested: 2026-10-26
-    notes: Public catalog — verified
 
   - id: olx_ua
     name: OLX Ukraine
@@ -37,7 +28,6 @@ sources:
     status: operational
     countries: [UA]
     tested: 2026-10-26
-    notes: Public search/detail pages embed schema.org Product — verified
 
   - id: flagma_ua
     name: Flagma.ua Ukraine
@@ -45,21 +35,12 @@ sources:
     status: operational
     countries: [UA]
     tested: 2026-10-26
-    notes: Public B2B/marketplace search embeds Product JSON-LD — verified
 
-  - id: bazar_bg
-    name: Bazar.bg Bulgaria
-    method: HTML search ItemList/Product JSON-LD
+  - id: nine99_md
+    name: 999.md Moldova
+    method: GraphQL POST https://999.md/graphql
     status: operational
-    countries: [BG]
-    tested: 2026-10-26
-    notes: Public classifieds search embeds Product inside ItemList — verified
-
-  - id: olx_pl
-    name: OLX Poland
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [PL]
+    countries: [MD]
     tested: 2026-10-26
 
   - id: olx_ro
@@ -69,126 +50,35 @@ sources:
     countries: [RO]
     tested: 2026-10-26
 
-  - id: olx_bg
-    name: OLX Bulgaria
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [BG]
-    tested: 2026-10-26
-
-  - id: olx_pt
-    name: OLX Portugal
-    method: GraphQL POST /apigateway/graphql
-    status: operational
-    countries: [PT]
-    tested: 2026-10-26
-
-# Default live search — zero keys required
 default_live_source_ids:
   - olx_ua
   - prom_ua
   - flagma_ua
-  - bazar_bg
-  - olx_pl
-  - olx_ro
-  - olx_bg
-  - olx_pt
   - nine99_md
+  - olx_ro
 
-# Explicitly deferred (гемор: ключи / OAuth / Cloudflare / партнёрки / лимиты)
 deferred_sources:
-  - id: satu_kz
-    reason: Outside EU/MD/UA focus (Kazakhstan)
-  - id: deal_by
-    reason: Outside EU/MD/UA focus (Belarus)
+  - id: olx_pl
+    reason: Outside product scope (UA/MD/RO only)
+  - id: olx_bg
+    reason: Outside product scope
+  - id: olx_pt
+    reason: Outside product scope
+  - id: bazar_bg
+    reason: Outside product scope
+  - id: baltic_sources
+    reason: LT/LV/EE out of scope
   - id: auto_ria
-    reason: Free API key + 30 req/h + mostly cars/donors, not parts listings
+    reason: Key + limits; cars/donors
   - id: ebay
-    reason: Paid/dev credentials
+    reason: Credentials
   - id: allegro
-    reason: OAuth app + CAPTCHA on public GraphQL
+    reason: OAuth / CAPTCHA
   - id: autodoc
-    reason: Cloudflare challenge
+    reason: Cloudflare
   - id: rozetka
-    reason: Search API returns IDs only; goods hydrate blocked by Cloudflare
-  - id: bigl
-    reason: Same stack as Prom but search HTML lacks Product JSON-LD
-  - id: hotline
-    reason: Nuxt shell without product prices in SSR HTML; no public search API
-  - id: allo
-    reason: Cloudflare challenge
-  - id: exist_ua
-    reason: 403 / blocked
-  - id: dok_ua
-    reason: Cloudflare challenge
-  - id: avto_pro
-    reason: 403 / blocked
-  - id: ovoko
-    reason: Partner API / Cloudflare
-  - id: brave_search
-    reason: API key for discovery only
-  - id: intercars
-    reason: Challenge / no public catalog API
-  - id: otomoto
-    reason: Cars-first; apigateway GraphQL not usable like OLX listings
-  - id: autovit
-    reason: Same Otodom stack as Otomoto — cars-first
-  - id: standvirtual
-    reason: Same Otodom stack — cars-first
-  - id: eurocarparts
-    reason: Auth-locked GraphQL schema
-  - id: goodvin
-    reason: Account/terms before use
-  - id: kleinanzeigen
-    reason: No Product JSON-LD in search HTML; gateway GraphQL blocked
-  - id: wallapop
-    reason: No public Product JSON-LD / GraphQL catalog
-  - id: vinted
-    reason: Fashion-first; no usable parts Product JSON-LD
-  - id: bazos
-    reason: Search HTML without Product JSON-LD
-  - id: jofogas
-    reason: No Product JSON-LD in search HTML
-  - id: ss_lv
-    reason: No Product JSON-LD in search HTML
-  - id: mobile_bg
-    reason: No Product JSON-LD; form CGI
-  - id: subito
-    reason: GraphQL 503 / blocked
-  - id: avito
-    reason: Rate-limit / region restrictions
-  - id: drom
-    reason: Weak/no priced Product JSON-LD on search
-  - id: kaspi
-    reason: 429 / anti-bot
-  - id: flagma_pl
-    reason: Search URL 404 in probe
-  - id: rrr_ovoko
-    reason: Cloudflare / partner
-  - id: ceneo
-    reason: Price comparison shell without listing Product JSON-LD
-  - id: makler_md
-    reason: Cloudflare
-  - id: bomba_md
-    reason: 403
-  - id: pieseauto_ro
-    reason: No usable Product JSON-LD on search
-  - id: epiesa_ro
-    reason: Cloudflare
-  - id: iparts_pl
-    reason: Cloudflare
-  - id: autoplius
-    reason: 403
-  - id: skelbiu
-    reason: 403
-  - id: okidoki
-    reason: Cloudflare
-  - id: milanuncios
-    reason: 405 / blocked method
-  - id: publi24
-    reason: Search routes 404 / no Product JSON-LD
-  - id: mobile_de
-    reason: Cars-first; GraphQL blocked
-  - id: autoscout24
-    reason: Auth-required listing GraphQL
-
+    reason: CF hydrate
+  - id: satu_kz
+    reason: Outside scope
+  - id: deal_by
+    reason: Outside scope

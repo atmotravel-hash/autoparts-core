@@ -9,6 +9,8 @@ query ListingSearchQuery($searchParameters: [SearchParameter!]!) {
         id
         title
         url
+        created_time
+        last_refresh_time
         params {
           key
           type
@@ -28,15 +30,20 @@ const MARKETS: Record<
   { host: string; country: string; currency: string; name: string; partsCategory?: string }
 > = {
   olx_ua: { host: "www.olx.ua", country: "UA", currency: "UAH", name: "OLX Ukraine", partsCategory: "2550" },
-  olx_pl: { host: "www.olx.pl", country: "PL", currency: "PLN", name: "OLX Poland" },
   olx_ro: { host: "www.olx.ro", country: "RO", currency: "RON", name: "OLX Romania" },
-  olx_bg: { host: "www.olx.bg", country: "BG", currency: "BGN", name: "OLX Bulgaria" },
-  olx_pt: { host: "www.olx.pt", country: "PT", currency: "EUR", name: "OLX Portugal" },
 };
 
 function photoUrl(link?: string | null): string | null {
   if (!link) return null;
   return link.replace("{width}", "640").replace("{height}", "480");
+}
+
+function ageFrom(ts: unknown): { refreshedAt: string | null; ageDays: number | null } {
+  if (!ts) return { refreshedAt: null, ageDays: null };
+  const d = new Date(String(ts));
+  if (Number.isNaN(d.getTime())) return { refreshedAt: null, ageDays: null };
+  const ageDays = Math.floor((Date.now() - d.getTime()) / (24 * 3600 * 1000));
+  return { refreshedAt: d.toISOString(), ageDays };
 }
 
 export async function searchOlx(
@@ -50,7 +57,7 @@ export async function searchOlx(
   const params: { key: string; value: string }[] = [
     { key: "query", value: query },
     { key: "offset", value: "0" },
-    { key: "limit", value: String(Math.min(limit, 20)) },
+    { key: "limit", value: String(Math.min(limit, 24)) },
   ];
   if (cfg.partsCategory) params.push({ key: "category_id", value: cfg.partsCategory });
 
@@ -90,6 +97,7 @@ export async function searchOlx(
       }
     }
     const photos = (row.photos as { link?: string }[]) || [];
+    const age = ageFrom(row.last_refresh_time || row.created_time);
     return {
       sourceId,
       sourceName: cfg.name,
@@ -100,6 +108,8 @@ export async function searchOlx(
       country: cfg.country,
       imageUrl: photoUrl(photos[0]?.link),
       brand: null,
+      refreshedAt: age.refreshedAt,
+      ageDays: age.ageDays,
     } satisfies SearchHit;
   });
 }

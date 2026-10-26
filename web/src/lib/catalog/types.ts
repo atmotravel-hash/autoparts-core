@@ -8,25 +8,30 @@ export type SearchHit = {
   country: string;
   imageUrl: string | null;
   brand: string | null;
+  /** ISO timestamp when known */
+  refreshedAt: string | null;
+  /** days since refresh; null if unknown */
+  ageDays: number | null;
 };
 
 export type SearchResponse = {
   query: string;
   results: SearchHit[];
+  droppedStale: number;
   errors: { sourceId: string; message: string }[];
   tookMs: number;
+  markets: string[];
 };
 
+/** Product scope: Ukraine · Moldova · Romania only */
 export const LIVE_SOURCES = [
   { id: "olx_ua", name: "OLX Ukraine", country: "UA" },
   { id: "prom_ua", name: "Prom.ua", country: "UA" },
   { id: "flagma_ua", name: "Flagma.ua", country: "UA" },
-  { id: "olx_pl", name: "OLX Poland", country: "PL" },
-  { id: "olx_ro", name: "OLX Romania", country: "RO" },
-  { id: "olx_bg", name: "OLX Bulgaria", country: "BG" },
-  { id: "bazar_bg", name: "Bazar.bg", country: "BG" },
-  { id: "olx_pt", name: "OLX Portugal", country: "PT" },
   { id: "nine99_md", name: "999.md", country: "MD" },
+  { id: "olx_ro", name: "OLX Romania", country: "RO" },
 ] as const;
 
 export type SourceId = (typeof LIVE_SOURCES)[number]["id"];
+
+export const MAX_LISTING_AGE_DAYS = 30;

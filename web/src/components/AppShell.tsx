@@ -29,7 +29,7 @@ export function AppShell({
       <aside className="sidebar hidden min-h-screen flex-col px-4 py-5 md:flex">
         <div className="mb-6 px-2">
           <p className="text-[15px] font-extrabold tracking-tight text-white">AutoParts Intelligence</p>
-          <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-slate-400">Find. Compare. Buy.</p>
+          <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-slate-400">UA · MD · RO</p>
         </div>
         <nav className="flex flex-1 flex-col gap-1">
           {NAV.map((item) => {

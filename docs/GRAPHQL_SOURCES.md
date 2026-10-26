@@ -10,13 +10,11 @@
 | `olx_ua` | Украина | `POST /apigateway/graphql` |
 | `prom_ua` | Украина | HTML search → Product JSON-LD |
 | `flagma_ua` | Украина | HTML search → Product JSON-LD |
-| `olx_pl` | Польша | GraphQL ListingSearchQuery |
-| `olx_ro` | Румыния | то же |
-| `olx_bg` | Болгария | то же |
-| `bazar_bg` | Болгария | HTML ItemList → Product JSON-LD |
-| `olx_pt` | Португалия | GraphQL ListingSearchQuery |
 | `nine99_md` | Молдова | `POST /graphql` searchAds |
+| `olx_ro` | Румыния | GraphQL ListingSearchQuery |
 | `fixture` / `manual` | — | демо / импорт |
+
+**Продуктовый scope:** только **UA · MD · RO**. Объявления старше 30 дней отбрасываются.
 
 ## Полный скан (что проверено)
 

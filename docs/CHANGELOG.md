@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 — 2026-10-26 (Europe/Chisinau)
+
+### Product scope lock
+- Markets **UA · MD · RO only** (drop PL/BG/PT/Bazar/Baltic from live search).
+- Stale classifieds (>30 days) dropped when age is known.
+- Web UI rebuilt as search service (mockup shell) per `docs/PRODUCT_TZ.md`.
+
 ## 0.3.0 — 2026-10-26 (Europe/Chisinau)
 
 ### Website (Vercel)

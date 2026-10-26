@@ -96,13 +96,6 @@ const MARKETS: Record<
     currency: "UAH",
     name: "Flagma.ua",
   },
-  bazar_bg: {
-    origin: "https://bazar.bg",
-    searchUrl: (q) => `https://bazar.bg/obiavi?q=${encodeURIComponent(q)}`,
-    country: "BG",
-    currency: "EUR",
-    name: "Bazar.bg",
-  },
 };
 
 export async function searchJsonLd(
@@ -149,6 +142,9 @@ export async function searchJsonLd(
         country: cfg.country,
         imageUrl: imageOf(p),
         brand: brandOf(p),
+        // Catalog products are treated as currently offered (no ad age).
+        refreshedAt: new Date().toISOString(),
+        ageDays: 0,
       } satisfies SearchHit;
     })
     .filter((h) => h.url);
