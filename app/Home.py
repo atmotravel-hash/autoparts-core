@@ -29,8 +29,9 @@ page_header("AutoParts Intelligence", "Find. Compare. Buy. — Europe · Moldova
 st.sidebar.markdown("### Navigation")
 st.sidebar.caption("John Doe — Pro Plan (local MVP)")
 st.sidebar.info(
-    "Live marketplace connectors are **not verified** in this environment. "
-    "Searches use the offline fixture source unless you import data."
+    "Live GraphQL catalogs enabled: **OLX UA/PL/RO** + **999.md**. "
+    "AUTODOC/Ovoko/Allegro remain blocked or credential-gated — no CAPTCHA bypass. "
+    "Fixture rows stay labelled as demo."
 )
 
 with get_session() as session:

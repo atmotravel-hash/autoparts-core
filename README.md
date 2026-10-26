@@ -1,14 +1,25 @@
-# AutoParts Intelligence Platform — AUTOPARTS CORE v0.1.0
+# AutoParts Intelligence Platform — AUTOPARTS CORE v0.2.0
 
 Modular automotive parts intelligence for **Europe, Moldova, and Ukraine**.
 
 This is **not** a generic scraper. It is a traceable multi-source search, identification, fitment, pricing, and seller-intelligence MVP.
 
+## Live GraphQL catalogs (tested)
+
+| Source | Endpoint | Market |
+|--------|----------|--------|
+| OLX UA | `POST /apigateway/graphql` | Ukraine |
+| OLX PL | `POST /apigateway/graphql` | Poland |
+| OLX RO | `POST /apigateway/graphql` | Romania |
+| 999.md | `POST /graphql` | Moldova |
+
+See `docs/GRAPHQL_SOURCES.md`. Cloudflare/CAPTCHA on AUTODOC/Ovoko/Allegro is **not** bypassed.
+
 ## Important honesty labels
 
-- **No live marketplace connector has been verified** in this environment.
-- Offline **fixture / demo** listings are seeded when `DEMO_MODE=true` and are always flagged `is_demo_data`.
-- eBay / Allegro / Brave Search appear in the registry as **non-operational stubs** until authorized access is tested.
+- Offline **fixture / demo** listings are flagged `is_demo_data`.
+- eBay / Allegro official APIs still need credentials.
+- Live collection uses public catalog GraphQL the sites already expose to their UI.
 
 ## Quick start
 

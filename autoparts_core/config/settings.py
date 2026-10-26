@@ -18,8 +18,11 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "AutoParts Intelligence"
-    app_version: str = "0.1.0"
+    app_version: str = "0.2.0"
     demo_mode: bool = True
+    # When true, Vehicle Search uses live GraphQL catalogs (OLX, 999.md) in addition to optional fixtures
+    enable_live_graphql: bool = True
+    include_fixture_in_live_search: bool = False
     database_url: str = Field(default=f"sqlite:///{ROOT / 'data' / 'autoparts.db'}")
     default_currency: str = "EUR"
     destination_country: str = "UA"

@@ -39,7 +39,9 @@ if st.button("Search OEM", type="primary"):
                 oem_number=oem,
                 currency="EUR",
             )
-            res = run_search(session, vq, source_ids=["fixture"])
+            from autoparts_core.services.search import resolve_default_sources
+
+            res = run_search(session, vq, source_ids=resolve_default_sources())
             all_results.extend(res["results"])
             for r in res["results"]:
                 fit = r.fitment.status.value if r.fitment else "—"

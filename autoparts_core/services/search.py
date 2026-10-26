@@ -8,7 +8,8 @@ from decimal import Decimal
 
 from sqlalchemy.orm import Session
 
-from autoparts_core.connectors.registry import get_registry
+from autoparts_core.config.settings import get_settings
+from autoparts_core.connectors.registry import default_live_source_ids, get_registry, operational_source_ids
 from autoparts_core.core.enums import FitmentStatus
 from autoparts_core.core.models import ListingView, Money, PriceBreakdown, VehicleQuery
 from autoparts_core.db.models import FitmentRecord, Listing, PriceObservation, SearchRunHistory, Seller
@@ -19,6 +20,16 @@ from autoparts_core.pricing.landed import build_price_breakdown
 from autoparts_core.services.ingestion import ingest_parsed_listing
 
 
+def resolve_default_sources() -> list[str]:
+    settings = get_settings()
+    if not settings.enable_live_graphql:
+        return ["fixture"]
+    ids = list(default_live_source_ids() or operational_source_ids(include_fixture=False))
+    if settings.include_fixture_in_live_search and "fixture" not in ids:
+        ids.append("fixture")
+    return ids or ["fixture"]
+
+
 def run_search(
     session: Session,
     vehicle: VehicleQuery,
@@ -27,9 +38,25 @@ def run_search(
     persist: bool = True,
 ) -> dict:
     registry = get_registry()
-    source_ids = source_ids or ["fixture"]
+    source_ids = source_ids or resolve_default_sources()
     queries = generate_queries(vehicle)
-    primary = queries[0]["query"] if queries else (vehicle.part_name or vehicle.oem_number or "")
+    # Prefer a human-readable multilingual query for GraphQL catalogs
+    primary = ""
+    if vehicle.make or vehicle.model or vehicle.part_name or vehicle.oem_number:
+        primary = " ".join(
+            str(x)
+            for x in [
+                vehicle.make,
+                vehicle.model,
+                vehicle.generation,
+                vehicle.year,
+                vehicle.part_name,
+                vehicle.oem_number,
+            ]
+            if x
+        ).strip()
+    if not primary:
+        primary = queries[0]["query"] if queries else ""
 
     filters: dict = {}
     if vehicle.oem_number:

@@ -13,9 +13,11 @@ import streamlit as st
 
 from autoparts_core.app.bootstrap import ensure_app_ready, page_header
 from autoparts_core.config.countries import enabled_countries
+from autoparts_core.connectors.registry import list_connectors
 from autoparts_core.core.enums import Condition
 from autoparts_core.core.models import VehicleQuery
 from autoparts_core.db.session import get_session
+from autoparts_core.services.search import resolve_default_sources as default_sources
 from autoparts_core.services.search import run_search
 
 st.set_page_config(page_title="Vehicle Search", layout="wide")
@@ -56,6 +58,15 @@ with tabs[0]:
         vin = r3[1].text_input("VIN (optional — not used as fitment proof)", value="")
         budget = r3[2].number_input("Budget (optional)", min_value=0.0, value=0.0, step=10.0)
 
+        ops = [c["source_id"] for c in list_connectors() if c.get("operational") and c["source_id"] != "manual"]
+        default_sel = [s for s in default_sources() if s in ops] or ops[:4]
+        sources = st.multiselect(
+            "Sources (GraphQL catalogs + optional fixtures)",
+            options=ops,
+            default=default_sel,
+            help="Live: olx_ua / olx_pl / olx_ro / nine99_md via POST GraphQL. Fixture = demo only.",
+        )
+
         submitted = st.form_submit_button("Search", type="primary", use_container_width=False)
 
     left, right = st.columns([2.4, 1])
@@ -77,9 +88,11 @@ with tabs[0]:
             budget=budget or None,
         )
         with get_session() as session:
-            result = run_search(session, vq, source_ids=["fixture"])
+            with st.spinner("Searching GraphQL catalogs…"):
+                result = run_search(session, vq, source_ids=sources or default_sources())
             st.session_state["last_search"] = result
             st.session_state["last_vehicle"] = vq.model_dump()
+            st.session_state["last_sources"] = sources
 
     result = st.session_state.get("last_search")
     with left:
@@ -88,8 +101,12 @@ with tabs[0]:
         else:
             if result.get("demo_data_present"):
                 st.warning("Results include **DEMO / fixture** listings — not live market availability.")
-            st.markdown(f"### Results ({len(result['results'])} offers)")
-            st.caption(f"Query: `{result['query']}` · Found hits: {result['found_hits']}")
+            live_n = sum(1 for v in result["results"] if not v.is_demo_data)
+            st.markdown(f"### Results ({len(result['results'])} offers · {live_n} live)")
+            st.caption(
+                f"Query: `{result['query']}` · Hits: {result['found_hits']} · "
+                f"Sources: {', '.join(st.session_state.get('last_sources') or [])}"
+            )
             for view in result["results"]:
                 with st.container(border=True):
                     cA, cB, cC = st.columns([3, 2, 2])

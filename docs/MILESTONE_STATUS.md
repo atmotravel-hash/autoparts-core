@@ -1,51 +1,33 @@
-# Milestone status — v0.1.0
+# Milestone status — v0.2.0
 
 **Generated:** 26 Oct 2026, Europe/Chisinau (EET)
 
 ## What works
 
 - Persistent SQLite database with Spec §13 entities
-- Fixture connector search (demo data clearly labelled)
-- Manual URL metadata import with SSRF checks
-- Vehicle / OEM / part-name search UI
-- Fitment evidence engine (catalogue-backed EXACT; title-only stays UNCONFIRMED)
-- Price comparison with FX provenance + unknown cost warnings
-- Duplicate scan + manual review actions
-- CSV/XLSX import & export with reconcile counts
-- 26 automated tests passing without live credentials
+- **Live GraphQL collection:** OLX UA/PL/RO + 999.md (POST catalog)
+- Fixture connector (demo) + manual URL import
+- Vehicle / OEM / part-name search UI with source multiselect
+- Fitment evidence, pricing, dedupe, import/export
 
 ## What was tested
 
-See `docs/TEST_REPORT.md` — 26 passed.
+- Unit: **32 passed** (live markers skipped by default)
+- Live opt-in: `RUN_LIVE_GRAPHQL=1 pytest -m live` — **2 passed**
+- E2E smoke: 51 live listings persisted from OLX/999 search (Passat B8 headlight)
 
-## Incomplete
+## Incomplete / blocked
 
-- Live authorized marketplace connectors
-- Brave Search discovery execution
-- Background revalidation worker loop
-- VIN decode provider
-- Production Postgres hardening / backups automation
-- Image perceptual hashing
+- AUTODOC, Ovoko, Allegro HTML GraphQL: Cloudflare/CAPTCHA — not bypassed
+- eBay/Allegro official APIs need credentials
+- Brave Search, VIN, background revalidation worker
 
 ## Live sources
 
-None verified.
-
-## Sources requiring credentials
-
-eBay, Allegro, Brave Search, FX API, VIN API — see `docs/SOURCE_CANDIDATES.md`.
-
-## Sample data
-
-All fixture listings under `tests/fixtures/listings.json` and any row with `is_demo_data=true`.
-
-## Known risks
-
-See `docs/RISK_REGISTER.md`.
+`olx_ua`, `olx_pl`, `olx_ro`, `nine99_md` — see `docs/GRAPHQL_SOURCES.md`.
 
 ## Exact next steps
 
-1. Supply authorized API credentials for one marketplace or search provider.
-2. Implement + health-test that connector; flip `operational` only after success.
-3. Add Alembic migrations for non-SQLite deploys.
-4. Implement job worker for revalidation.
+1. Allegro / eBay official API credentials when available.
+2. Partner access for Ovoko/AUTODOC (no challenge bypass).
+3. Revalidation worker + Alembic for Postgres.

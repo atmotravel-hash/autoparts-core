@@ -89,6 +89,25 @@ def _seed_reference_data() -> None:
                     terms_notes="User-supplied URLs only; SSRF protections apply",
                 )
             )
+        live_markets = [
+            ("nine99_md", "999.md Moldova", "PUBLIC_PAGE", "MD", "GraphQL POST /graphql — tested"),
+            ("olx_ua", "OLX Ukraine", "PUBLIC_PAGE", "UA", "GraphQL POST /apigateway/graphql — tested"),
+            ("olx_pl", "OLX Poland", "PUBLIC_PAGE", "PL", "GraphQL POST /apigateway/graphql — tested"),
+            ("olx_ro", "OLX Romania", "PUBLIC_PAGE", "RO", "GraphQL POST /apigateway/graphql — tested"),
+        ]
+        for sid, name, access, countries, notes in live_markets:
+            if session.query(Marketplace).filter_by(source_id=sid).count() == 0:
+                session.add(
+                    Marketplace(
+                        source_id=sid,
+                        name=name,
+                        access_method=access,
+                        health_status="healthy",
+                        operational=True,
+                        supported_countries=countries,
+                        terms_notes=notes,
+                    )
+                )
         session.commit()
 
 

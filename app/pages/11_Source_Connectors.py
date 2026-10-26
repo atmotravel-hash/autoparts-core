@@ -10,12 +10,13 @@ if str(ROOT) not in sys.path:
 import streamlit as st
 
 from autoparts_core.app.bootstrap import ensure_app_ready, page_header
-from autoparts_core.connectors.registry import get_registry, list_connectors
+from autoparts_core.connectors.registry import get_registry, list_connectors, load_source_catalog
 
 st.set_page_config(page_title="Source Connectors", layout="wide")
 ensure_app_ready()
-page_header("Source Connectors", "Never mark operational without a successful test")
+page_header("Source Connectors", "GraphQL catalogs + candidates — never mark operational without a test")
 
+st.subheader("Registered connectors")
 for row in list_connectors():
     with st.container(border=True):
         st.markdown(f"### {row['source_name']} (`{row['source_id']}`)")
@@ -37,15 +38,10 @@ for row in list_connectors():
             connector = get_registry()[row["source_id"]]
             st.json(connector.health_check())
 
-st.subheader("Candidate evaluation (not integrated)")
-st.markdown(
-    """
-| Candidate | Access available? | Method | Notes |
-|-----------|-------------------|--------|-------|
-| eBay | No credentials in this env | Official API | Stub only — untested |
-| Allegro | No credentials | Official API | Stub only — untested |
-| AUTODOC | Not authorized here | Unknown | Do not scrape |
-| Ovoko/RRR | Not authorized here | Unknown | Do not scrape |
-| Brave Search | No API key | Public search API | Discovery only when keyed |
-"""
+st.subheader("Full source catalog (config/sources.yaml)")
+st.dataframe(load_source_catalog(), use_container_width=True, hide_index=True)
+
+st.info(
+    "AUTODOC / Ovoko / Allegro HTML GraphQL probes hit Cloudflare/CAPTCHA — "
+    "we do **not** bypass challenges. Use official APIs when credentials are available."
 )

@@ -37,10 +37,12 @@ st.json(mapped)
 
 if st.button("Search", type="primary"):
     with get_session() as session:
+        from autoparts_core.services.search import resolve_default_sources
+
         res = run_search(
             session,
             VehicleQuery(part_name=name, make="Volkswagen", model="Passat", generation="B8", year=2017),
-            source_ids=["fixture"],
+            source_ids=resolve_default_sources(),
         )
     st.write(f"{len(res['results'])} results")
     for r in res["results"]:
