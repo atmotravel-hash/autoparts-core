@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "AutoParts Intelligence"
-    app_version: str = "0.2.0"
+    app_version: str = "0.2.1"
     demo_mode: bool = True
     # When true, Vehicle Search uses live GraphQL catalogs (OLX, 999.md) in addition to optional fixtures
     enable_live_graphql: bool = True

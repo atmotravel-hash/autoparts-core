@@ -21,9 +21,8 @@ def test_catalog_lists_live_graphql_sources():
 def test_registry_marks_live_connectors_operational():
     rows = {r["source_id"]: r for r in list_connectors()}
     assert rows["nine99_md"]["operational"] is True
-    assert rows["olx_ua"]["operational"] is True
-    assert rows["olx_pl"]["operational"] is True
-    assert rows["olx_ro"]["operational"] is True
+    for sid in ("olx_ua", "olx_pl", "olx_ro", "olx_bg", "olx_pt"):
+        assert rows[sid]["operational"] is True, sid
     assert rows["autodoc"]["operational"] is False
 
 

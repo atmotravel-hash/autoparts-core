@@ -58,6 +58,34 @@ sources:
     tested: 2026-10-26
     notes: ListingSearchQuery — verified
 
+  - id: olx_bg
+    name: OLX Bulgaria
+    method: GraphQL POST /apigateway/graphql
+    graphql: true
+    endpoint: https://www.olx.bg/apigateway/graphql
+    status: operational
+    countries: [BG]
+    tested: 2026-10-26
+    notes: ListingSearchQuery — verified
+
+  - id: olx_pt
+    name: OLX Portugal
+    method: GraphQL POST /apigateway/graphql
+    graphql: true
+    endpoint: https://www.olx.pt/apigateway/graphql
+    status: operational
+    countries: [PT]
+    tested: 2026-10-26
+    notes: ListingSearchQuery — verified
+
+  - id: auto_ria
+    name: AUTO.RIA
+    method: Official developers.ria.com API (+ public search JSON for cars)
+    graphql: false
+    status: credentials_missing
+    countries: [UA]
+    notes: Free API key at developers.ria.com required for production; public search is vehicle-centric
+
   - id: ebay
     name: eBay
     method: Official Developer API
@@ -184,4 +212,6 @@ default_live_source_ids:
   - olx_ua
   - olx_pl
   - olx_ro
+  - olx_bg
+  - olx_pt
   - nine99_md

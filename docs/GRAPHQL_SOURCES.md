@@ -5,22 +5,26 @@
 | Source | Endpoint | Method | Markets |
 |--------|----------|--------|---------|
 | 999.md | `POST https://999.md/graphql` | `searchAds`, `advert` | Moldova |
-| OLX UA | `POST https://www.olx.ua/apigateway/graphql` | `ListingSearchQuery` | Ukraine |
-| OLX PL | `POST https://www.olx.pl/apigateway/graphql` | `ListingSearchQuery` | Poland |
-| OLX RO | `POST https://www.olx.ro/apigateway/graphql` | `ListingSearchQuery` | Romania |
+| OLX UA | `POST …/apigateway/graphql` | `ListingSearchQuery` | Ukraine |
+| OLX PL | same | `ListingSearchQuery` | Poland |
+| OLX RO | same | `ListingSearchQuery` | Romania |
+| OLX BG | same | `ListingSearchQuery` | Bulgaria |
+| OLX PT | same | `ListingSearchQuery` | Portugal |
 
 These use the same public catalog GraphQL the websites call from their UI. Client-side rate limits apply. CAPTCHA/Cloudflare challenges are **not** bypassed.
 
-## Blocked / not operational (honest)
+## Broad scan (~70 hosts)
 
-| Source | Result | Action |
-|--------|--------|--------|
-| AUTODOC `*/graphql` | Cloudflare challenge | Need authorized API / RapidAPI |
-| Ovoko / RRR | Cloudflare challenge | Partner API |
-| Allegro `/graphql` | Captcha delivery | Official Allegro REST API + OAuth |
-| Inter Cars, DOK.ua, Exist.ua | Challenge / deny | Re-evaluate with credentials |
-| Euro Car Parts Omnipart GraphQL | HTTP 403 | Auth required |
-| eBay | No public GraphQL catalog here | Official Browse API |
+Many classifieds/parts shops were probed for `/graphql`, `/apigateway/graphql`, `/api/graphql`.
+
+| Candidate | Finding |
+|-----------|---------|
+| AUTO.RIA | Public JSON search for vehicles; parts → `developers.ria.com` API key |
+| Euro Car Parts `/api/graphql` | Endpoint alive; schema locked without known operations |
+| Otomoto / Standvirtual | Challenge or incompatible schema |
+| Kleinanzeigen | 403 JSON |
+| Lalafo / Kufar / Autoplius | No usable public search in this probe |
+| AUTODOC / Ovoko / Allegro / Inter Cars / DOK / Exist | Cloudflare/CAPTCHA or deny — not bypassed |
 
 ## Configuration
 
